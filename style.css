@@ -2,6 +2,10 @@ html {
     width: 100vw;
     height: 100vh;
 }
+a{
+  color: black;
+  text-decoration: none; /* opcional: quita el subrayado del enlace */
+}
 
 body {
     margin: 0;
@@ -86,8 +90,20 @@ nav a {
     padding: 15px; /* Añadido para que el texto no toque los bordes naranjas */
 } 
 
+.img_banner {
+    width: 100%;
+    height: auto;
+    margin-top: 10px; 
+    border: none;
+}
 
-
+/* Hace que los enlaces actúen como las tarjetas flexibles */
+.content a {
+    flex: 1 1 250px; /* Se distribuyen equitativamente con un ancho base */
+    margin: 10px;    /* El margen pasa a ser del enlace */
+    display: flex;   /* Convierte el enlace en contenedor flexible */
+    text-decoration: none;
+}
 
 
 @media (max-width: 600px) {
