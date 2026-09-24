@@ -1,0 +1,103 @@
+html {
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    margin: 0;
+    padding: 10px 0; 
+    background-color: #FDC656;
+    color: black;
+    font-size: 30px;
+    text-align: center; /*Centramos*/
+    font-family: 'Roboto', sans-serif; /*Tipo de fuente*/
+    font-weight: 100;       /* Roboto Light */
+    font-style: italic;     /* Cursiva */
+}
+
+nav {
+    position: absolute;
+    width: 100%;
+    margin-top: 18px;
+    z-index: 10; 
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center; 
+    gap: 30px; 
+}
+
+nav a {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;       
+    font-style: italic; 
+    font-size: 25px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
+}
+
+.hero-banner {
+    width: 100%;
+    background: linear-gradient(to right, #2a2522, #473e36, #2a2522); 
+    padding: 60px 0 40px 0; 
+    display: flex;
+    justify-content: center; 
+}
+
+.zigo_main {
+    display: block;
+    width: 95%;          
+    max-width: 800px;   
+    height: auto;        
+    border-radius: 15px; 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); 
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap; /*Hace que las tarjetas bajen si no caben en fila */
+    justify-content: center;
+    padding: 20px;
+    background-color: #f5f5f5; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    margin-top: -30px; 
+}
+
+.content-item { 
+    flex: 1 1 250px; /* Hace que las tarjetas tengan un tamaño mínimo ideal */
+    margin: 10px; 
+    background-color: #F59E0B; 
+    border-radius: 20px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    text-align: center;
+    padding: 15px; /* Añadido para que el texto no toque los bordes naranjas */
+} 
+
+
+
+
+
+@media (max-width: 600px) {
+    header {
+        font-size: 20px; /* Texto del encabezado un poco más pequeño en celular */
+    }
+    nav ul {
+        gap: 10px; /* Reducimos la separación de los enlaces */
+    }
+    nav a {
+        font-size: 16px; /* Reducimos el tamaño de la letra del menú para que quepa */
+    }
+}
