@@ -159,7 +159,7 @@ nav ul {
     background-color: #FFFFFF; 
     border-radius: 20px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-    padding: 25px 200px; /* Un poco más de espacio interno */
+    padding: 25px 20px; /* Un poco más de espacio interno */
     display: flex; /* Convertimos la tarjeta en contenedor flex */
     flex-direction: column; /* Apilamos de arriba hacia abajo */
     align-items: center; /* Centramos todo horizontalmente */
@@ -168,7 +168,7 @@ nav ul {
 .img_banner {
     width: 100%;
     height: auto;
-    margin-top: 15px; 
+    margin-top: 0; 
     margin-bottom: 0; /* Empuja el botón un poco hacia abajo */
     border: none;
 }
