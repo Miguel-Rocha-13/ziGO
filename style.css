@@ -153,16 +153,16 @@ nav ul {
 }
 
 .content-item { 
-    flex: 1; /* Ocupa todo el espacio de altura del enlace (a) */
+    flex: 1; 
     width: 100%; 
-    margin: 0; /* Quitamos el margen duplicado */
+    margin: 0; 
     background-color: #FFFFFF; 
     border-radius: 20px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-    padding: 25px 20px; /* Un poco más de espacio interno */
-    display: flex; /* Convertimos la tarjeta en contenedor flex */
-    flex-direction: column; /* Apilamos de arriba hacia abajo */
-    align-items: center; /* Centramos todo horizontalmente */
+    padding: 20px 15px; /* <--- Redujimos el relleno superior/inferior para hacerlas menos altas */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
 }
 
 .img_banner {
@@ -173,11 +173,12 @@ nav ul {
     border: none;
 }
 
-/* Hace que los enlaces actúen como las tarjetas flexibles */
+/* 1. Límite de ancho para las cajas */
 .content a {
-    flex: 1 1 250px; /* Se distribuyen equitativamente con un ancho base */
-    margin: 10px;    /* El margen pasa a ser del enlace */
-    display: flex;   /* Convierte el enlace en contenedor flexible */
+    flex: 1 1 250px; 
+    max-width: 320px; /* <--- Esto evita que se hagan gigantes */
+    margin: 10px;    
+    display: flex;   
     text-decoration: none;
 }
 
