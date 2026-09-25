@@ -126,7 +126,7 @@ nav ul {
     justify-content: center; 
     overflow: hidden; 
     position: relative;
-    background:  #e9ecef /* Fondo blanco para que el difuminado se funda con la página */
+    background:  #e9ecef; /* Fondo blanco para que el difuminado se funda con la página */
 }
 
 .zigo_main {
