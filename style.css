@@ -93,7 +93,7 @@ nav ul {
     font-family: 'Roboto', sans-serif;
     font-weight: 900;       
     font-style: italic;
-    font-size: 30px;
+    font-size: 25px;
     position: relative; /* Muy importante para posicionar la línea */
     padding-bottom: 5px; /* Espacio entre el texto y la línea */
     white-space: nowrap;
@@ -132,7 +132,7 @@ nav ul {
 .zigo_main {
     display: block;
     width: 95%;          
-    max-width: 800px;   
+    max-width: 500px;   
     height: auto;        
     /* Aplicación de la máscara radial (Vignette) */
     -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
