@@ -93,7 +93,7 @@ nav ul {
     font-family: 'Roboto', sans-serif;
     font-weight: 900;       
     font-style: italic;
-    font-size: 35px;
+    font-size: 30px;
     position: relative; /* Muy importante para posicionar la línea */
     padding-bottom: 5px; /* Espacio entre el texto y la línea */
     white-space: nowrap;
@@ -159,7 +159,7 @@ nav ul {
     background-color: #FFFFFF; 
     border-radius: 20px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-    padding: 25px 150px; /* Un poco más de espacio interno */
+    padding: 25px 200px; /* Un poco más de espacio interno */
     display: flex; /* Convertimos la tarjeta en contenedor flex */
     flex-direction: column; /* Apilamos de arriba hacia abajo */
     align-items: center; /* Centramos todo horizontalmente */
