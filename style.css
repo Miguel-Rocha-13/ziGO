@@ -204,7 +204,133 @@ nav ul {
   margin-top: auto; /* Empuja el botón hasta el borde inferior de la tarjeta */
 }
 
+/* =========================================
+   ESTILOS DEL FOOTER (PIE DE PÁGINA)
+   ========================================= */
 
+.footer-zigo {
+    background-color: #F3F4F6; /* Mismo fondo gris claro de tus tarjetas */
+    padding: 50px 20px 30px 20px;
+    font-family: 'Roboto', sans-serif;
+    color: #333333;
+    margin-top: 20px;
+    border-top: 1px solid #e5e7eb; /* Una pequeña línea separadora opcional */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1000px;
+    margin: 0 auto; /* Centra el contenido en pantallas grandes */
+    gap: 40px;
+    flex-wrap: wrap; /* Permite que el contenido baje en celulares */
+}
+
+/* --- Sección Izquierda: Testimonios --- */
+.testimonios-section {
+    flex: 2; /* Le da más espacio a los textos que a la dirección */
+    min-width: 300px;
+}
+
+.testimonios-titulo {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333333; /* O puedes usar tu azul marino #15527A */
+}
+
+.testimonios-textos {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.cita {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    font-style: italic;
+    color: #555555;
+    line-height: 1.6;
+}
+
+/* --- Sección Derecha: Información --- */
+.footer-info-section {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Alinea todo hacia la derecha en PC */
+    text-align: right;
+    gap: 15px;
+}
+
+/* Redes Sociales */
+.redes-sociales {
+    display: flex;
+    gap: 20px;
+}
+
+.redes-sociales a {
+    color: #333333;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+/* Efecto hover en las redes sociales */
+.redes-sociales a:hover {
+    color: #01707F; /* Color turquesa de tu marca */
+}
+
+/* Dirección */
+.direccion p {
+    font-size: 12px;
+    color: #666666;
+    margin: 2px 0;
+}
+
+/* Enlaces Legales inferiores */
+.enlaces-legales {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+.enlaces-legales a {
+    font-size: 12px;
+    color: #333333;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.enlaces-legales a:hover {
+    color: #15527A; /* Azul marino */
+    text-decoration: underline;
+}
+
+/* --- Adaptación Automática para Celulares --- */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .testimonios-textos {
+        flex-direction: column; /* Apila los dos testimonios uno debajo del otro */
+        gap: 15px;
+    }
+
+    .footer-info-section {
+        align-items: center; /* Centra el contenido en celulares */
+        text-align: center;
+        margin-top: 20px;
+        width: 100%;
+    }
+}
 
 /* Reglas de la animación de derecha a izquierda */
 @keyframes deslizar-texto {
