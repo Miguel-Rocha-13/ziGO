@@ -1,12 +1,15 @@
+/* =========================================
+   DISEÑO GENERAL DEL SITIO WEB
+   ========================================= */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 a{
-  color: black;
-  text-decoration: none; /* opcional: quita el subrayado del enlace */
+    color: black;
+    text-decoration: none; /* Quita el subrayado del enlace */
 }
 
 body {
@@ -15,113 +18,112 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-header {
-    margin: 0;
-    padding: 10px 0; 
-    background-color: #01707F;
+.calendario-google {
+    display: block;
+    width: 100%;
+    height: 1000px;
+    border: 0;
 }
 
-/* Contenedor principal de la barra superior */
-.header-anuncios {
-  background-color: #01707F; /* Fondo gris claro, similar al de tu referencia */
-  color: white; /* Color del texto */
-  font-family: 'Roboto', sans-serif; /*Tipo de fuente*/
-  font-weight: 300;       /* Roboto Light */
-  font-style: italic;     /* Cursiva */
-  font-size: 30px; /* Tamaño de texto pequeño para el top header */
-  height: 40px; /* Altura fija de la barra */
-  position: relative; /* Necesario para contener los mensajes absolutos */
-  overflow: hidden; /* Oculta el texto cuando sale por los lados */
-  width: 100%;
-  display: flex;
-  align-items: center;
+/* =========================================
+   CONTENEDOR PRINCIPAL DE LA BARRA SUPERIOR
+   ========================================= */
+
+   .header-anuncios {
+    background-color: #01707F; /* Fondo gris claro*/
+    color: white; /* Color del texto */
+    font-family: 'Roboto', sans-serif; /*Tipo de fuente*/
+    font-weight: 300;       /* Roboto Light */
+    font-style: italic;     /* Cursiva */
+    font-size: 30px; /* Tamaño de texto pequeño para el top header */
+    height: 40px; /* Altura fija de la barra */
+    position: relative; /* Necesario para contener los mensajes absolutos */
+    overflow: hidden; /* Oculta el texto cuando sale por los lados */
+    width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 /* Estilo base para cada línea de texto */
 .mensaje {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  opacity: 0; /* Invisibles por defecto */
-  transform: translateX(100%); /* Comienzan fuera de la pantalla por la derecha */
-  /* La animación dura 10 segundos en total y se repite infinitamente */
-  animation: deslizar-texto 10s infinite; 
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    opacity: 0; /* Invisibles por defecto */
+    transform: translateX(100%); /* Comienzan fuera de la pantalla por la derecha */
+    /* La animación dura 10 segundos en total y se repite infinitamente */
+    animation: deslizar-texto 10s infinite; 
 }
 
 /* Al segundo mensaje le damos un retraso de la mitad del tiempo total (5s) 
    para que aparezca justo cuando el primero desaparece */
 .m2 {
-  animation-delay: 5s;
+    animation-delay: 5s;
 }
 
-
-nav {
-    position: absolute;
-    width: 100%;
-    z-index: 10; 
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center; 
-    gap: 30px; 
-}
+/* =========================================
+    DISEÑO DEL MENU PRINCIPAL
+   ========================================= */
 
 .menu-principal {
     position: absolute;
     width: 100%;
     z-index: 10; 
-    padding: 20px 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centra la "píldora" */
 }
 
 .menu-principal ul {
     list-style: none;
-    padding: 0;
+    padding: 12px 40px; /* Espacio interno para crear la píldora */
     margin: 0;
     display: flex;
-    justify-content: center; 
-    gap: 30px; 
+    gap: 40px; 
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco semitransparente */
+    border-radius: 50px; /* Forma redonda */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+    backdrop-filter: blur(5px); /* Efecto de cristal moderno */
 }
 
-/* Estilo base de los enlaces del menú */
 .nav-item {
-    color: #333333; /* Color oscuro para el texto */
-    text-decoration: none; /* Quitamos el subrayado por defecto */
+    color: #15527A; /* Azul marino de la marca. */
+    text-decoration: none; 
     font-family: 'Roboto', sans-serif;
-    font-weight: 900;       
-    font-style: italic;
-    font-size: 25px;
-    position: relative; /* Muy importante para posicionar la línea */
-    padding-bottom: 5px; /* Espacio entre el texto y la línea */
+    font-weight: 500; 
+    font-size: 14px;
+    letter-spacing: 1px; /* Separación de letras para toque premium */
+    text-transform: uppercase; 
+    position: relative; 
+    padding-bottom: 5px; 
     white-space: nowrap;
     display: inline-block;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
 }
 
-/* Creación de la línea (inicialmente invisible) */
 .nav-item::after {
     content: "";
     position: absolute;
-    bottom: 0; /* Coloca la línea en la parte inferior. Si la quieres físicamente arriba del texto, cambia a 'top: -5px;' */
+    bottom: 0; 
     left: 0;
-    width: 0%; /* Inicia con ancho 0 para que no se vea */
-    height: 2px; /* Grosor de la línea */
-    background-color: #15527A; /* Color azul de la línea (haciendo juego con tus botones) */
-    transition: width 0.3s ease-in-out; /* Controla la velocidad y suavidad de la animación */
+    width: 0%; 
+    height: 2px; 
+    background-color: #01707F; /* Color de la línea animada */
+    transition: width 0.3s ease-in-out; 
 }
 
-/* Efecto cuando el mouse pasa por encima (hover) */
 .nav-item:hover::after {
-    width: 100%; /* La línea se expande hasta cubrir todo el ancho de la palabra */
+    width: 100%; 
 }
 
-/* 1. Actualiza el contenedor principal */
+/* Aqui termina el diseño del menú principal */
+
+/* =========================================
+   CONTENEDOR PRINCIPAL (MAIN)
+   ========================================= */
+
 .hero-banner {
     width: 100%;
-    padding: 70px 0 0 0; 
+    padding: 5px; 
     display: flex;
     justify-content: center; 
     overflow: hidden; 
@@ -138,7 +140,12 @@ nav ul {
     -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
     mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
 }
+/* Aqui termina el contenedor principal */
 
+
+/* =========================================
+   DESEÑO DEL MENÚ SECUNDARIO
+   ========================================= */
 .content {
     display: flex;
     flex-wrap: wrap; /*Hace que las tarjetas bajen si no caben en fila */
@@ -149,31 +156,42 @@ nav ul {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
     margin-top: 0; 
     gap: 20px; /* Espacio entre los botones */
-    justify-content: center; /* Centrar los botones */  
+    justify-content: center; /* Centrar los botones */ 
+    font-size: 10px; 
 }
 
+/* --- DISEÑO DE IMÁGENES Y BOTONES --- */
 .content-item { 
     flex: 1; 
     width: 100%; 
     margin: 0; 
     background-color: #FFFFFF; 
     border-radius: 20px; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-    padding: 20px 15px; /* <--- Redujimos el relleno superior/inferior para hacerlas menos altas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+    padding: 25px 20px; /* <--- Relleno superior/ inferior para hacerlas menos altas */
     display: flex; 
     flex-direction: column; 
     align-items: center; 
 }
 
+/* Nuevo contenedor para controlar el botón sobre la imagen */
+.imagen-contenedor {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    border-radius: 12px;
+    overflow: hidden; /* Mantiene la imagen y el botón dentro de los bordes */
+}
+
 .img_banner {
     width: 100%;
     height: auto;
+    display: block;
     margin-top: 0; 
     margin-bottom: 0; /* Empuja el botón un poco hacia abajo */
-    border: none;
+    transition: transform 0.4s ease; /* Transición suave para el zoom */
 }
 
-/* 1. Límite de ancho para las cajas */
 .content a {
     flex: 1 1 250px; 
     max-width: 320px; /* <--- Esto evita que se hagan gigantes */
@@ -182,28 +200,40 @@ nav ul {
     text-decoration: none;
 }
 
-
-/* Estilo principal del botón */
-.btn-zigo {
-  background-color: #15527A;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 50px;
-  /* --- AJUSTES DE TAMAÑO --- */
-  padding: 20px 25px; /* Más altura para el botón */
-  font-size: 16px; /* Letra más grande y legible */
-  min-width: 180px; /* Anchura mínima para que no se vean aplastados */
-  width: 80%; /* Hace que todos tengan un tamaño similar */
-  max-width: 250px;
-  
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  
-  /* --- LA MAGIA DE LA ALINEACIÓN --- */
-  margin-top: auto; /* Empuja el botón hasta el borde inferior de la tarjeta */
+/* Efecto sutil: La imagen hace un zoom lento cuando pasas el cursor por la tarjeta */
+.content a:hover .img_banner {
+    transform: scale(1.05);
 }
+
+.btn-zigo {
+    position: static;
+    align-self: center;
+    background-color: rgba(21, 82, 122, 0.95); /* Azul marino casi sólido */
+    color: #FFFFFF;
+    border-radius: 50px;
+    padding: 12px 35px; 
+    font-size: 13px; 
+    min-width: 180px; /* Anchura mínima para que no se vean aplastados */
+    width: 60%; /* Hace que todos tengan un tamaño similar */
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra que le da profundidad */
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+/* El botón cambia de color y se levanta ligeramente al hacer hover en la tarjeta */
+.content a:hover .btn-zigo {
+    background-color: #01707F; /* Cambia a turquesa */
+    transform: translateY(-3px);
+    box-shadow: 0 12px 20px rgba(1, 112, 127, 0.4);
+}
+
 
 /* =========================================
    ESTILOS DEL FOOTER (PIE DE PÁGINA)
@@ -313,11 +343,19 @@ nav ul {
     text-decoration: underline;
 }
 
-/* --- Adaptación Automática para Celulares --- */
+
+/* =========================================
+   Adaptación Automática para Celulares
+   ========================================= */
+
 @media (max-width: 768px) {
     .footer-container {
         flex-direction: column;
         align-items: center;
+    }
+
+    .calendario-google {
+        height: 1300px;
     }
 
     .testimonios-textos {
@@ -335,17 +373,18 @@ nav ul {
 
 /* Reglas de la animación de derecha a izquierda */
 @keyframes deslizar-texto {
-  0% {
-    opacity: 0;
-    transform: translateX(100%); /* Entra por la derecha */
+    0% {
+        opacity: 0;
+        transform: translateX(100%); /* Entra por la derecha */
   }
-  10%, 40% {
-    opacity: 1;
-    transform: translateX(0); /* Se queda quieto y visible en el centro durante 3 segundos */
+
+    10%, 40% {
+        opacity: 1;
+        transform: translateX(0); /* Se queda quieto y visible en el centro durante 3 segundos */
   }
-  50%, 100% {
-    opacity: 0;
-    transform: translateX(-100%); /* Sale deslizándose hacia la izquierda y se oculta */
+    50%, 100% {
+        opacity: 0;
+        transform: translateX(-100%); /* Sale deslizándose hacia la izquierda y se oculta */
   }
 }
 
@@ -353,7 +392,7 @@ nav ul {
 @media (max-width: 768px) {
   
   /* Achicar el texto del anuncio superior */
-  .header-anuncios {
+.header-anuncios {
     font-size: 11px; /* Letra más pequeña para que quepa el mensaje largo */
   }
 
@@ -365,7 +404,7 @@ nav ul {
   }
 
   /* Reducir ligeramente la letra del menú */
-  .nav-item {
+.nav-item {
     font-size: 13px;
   }
 }
