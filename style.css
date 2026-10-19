@@ -17,6 +17,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    /* Agregamos un margen inferior para que el contenido no quede oculto detrás del panel flotante */
+    padding-bottom: 70px; 
 }
 
 .calendario-google {
@@ -36,7 +38,7 @@ body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-style: italic;
-    font-size: 16px; /* Ajustado ligeramente para que los textos largos respiren mejor */
+    font-size: 16px; 
     height: 40px;
     position: relative;
     overflow: hidden;
@@ -45,47 +47,32 @@ body {
     align-items: center;
 }
 
-/* Estilo base para cada línea de texto */
 .mensaje {
     position: absolute;
     width: 100%;
     text-align: center;
     opacity: 0;
     transform: translateX(100%); 
-    /* Duración total a 16 segundos (4 segundos exactos por cada uno de los 4 mensajes) */
     animation: deslizar-texto 16s infinite; 
 }
 
-/* Retrasos escalados cada 4 segundos (16s / 4 mensajes = 4s) */
-.m1 {
-    animation-delay: 0s;
-}
+.m1 { animation-delay: 0s; }
+.m2 { animation-delay: 4s; }
+.m3 { animation-delay: 8s; }
+.m4 { animation-delay: 12s; }
 
-.m2 {
-    animation-delay: 4s;
-}
-
-.m3 {
-    animation-delay: 8s; 
-}
-
-.m4 { 
-    animation-delay: 12s; 
-}
-
-/* Reglas de la animación adaptadas para los 16 segundos */
 @keyframes deslizar-texto {
     0% {
         opacity: 0;
-        transform: translateX(100%); /* Entra por la derecha */
+        transform: translateX(100%);
     }
     4%, 21% {
         opacity: 1;
-        transform: translateX(0); /* Se queda estático y visible en el centro el tiempo justo */
+        transform: translateX(0);
     }
     25%, 100% {
         opacity: 0;
-        transform: translateX(-100%); /* Sale hacia la izquierda y se oculta */
+        transform: translateX(-100%);
     }
 }
 
@@ -254,7 +241,7 @@ body {
 }
 
 /* =========================================
-   COLECCIÓN DE ARMAZONES (Única declaración)
+   COLECCIÓN DE ARMAZONES Y MODAL
    ========================================= */
 
 .coleccion-section {
@@ -295,6 +282,24 @@ body {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
+/* --- CASILLA DE SELECCIÓN --- */
+.checkbox-container {
+    font-size: 13px;
+    color: #555555;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.checkbox-container input {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    accent-color: #01707F;
+}
+
 .armazon-card .imagen-container {
     width: 100%;
     height: 180px;
@@ -325,23 +330,123 @@ body {
     text-align: center;
 }
 
-.btn-agendar {
+/* --- NUEVO BOTÓN DE DETALLES --- */
+.btn-detalles {
     display: inline-block;
-    background-color: #165b66;
+    background-color: #15527A;
     color: #ffffff;
-    padding: 12px 20px;
-    text-decoration: none;
+    border: none;
+    padding: 10px 20px;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: auto;
+    width: 100%;
 }
 
-.btn-agendar:hover {
-    background-color: #0e3c43;
+.btn-detalles:hover {
+    background-color: #01707F;
+}
+
+/* --- MODAL (VENTANA EMERGENTE) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(9, 29, 51, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    font-family: 'Roboto', sans-serif;
+}
+
+.modal-cerrar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: #091d33;
+}
+
+.modal-img {
+    max-width: 100%;
+    height: 170px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.modal-content h2 {
+    color: #091d33;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.modal-sub {
+    color: #01707F;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.modal-desc {
+    color: #555555;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* --- PANEL FLOTANTE INFERIOR --- */
+.panel-agendar-flotante {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #091d33;
+    color: white;
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.25);
+    z-index: 999;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+}
+
+.btn-agendar-general {
+    background-color: #01707F;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 13px;
+    transition: background 0.3s;
+}
+
+.btn-agendar-general:hover {
+    background-color: #165b66;
 }
 
 /* =========================================
@@ -534,7 +639,6 @@ body {
    Adaptación Automática para Celulares
    ========================================= */
 @media (max-width: 600px) {
-    /* Grids a una sola columna */
     .testimonios-google-grid,
     .armazon-grid {
         grid-template-columns: 1fr;
@@ -557,7 +661,7 @@ body {
         font-size: 18px;
     }
 
-    .btn-agendar {
+    .btn-detalles {
         width: 100%;
         text-align: center;
         box-sizing: border-box;
@@ -588,7 +692,6 @@ body {
         font-size: 11px;
     }
 
-    /* Ajustar el menú para dispositivos móviles */
     .menu-principal ul {
         gap: 10px;
         flex-wrap: wrap;
@@ -607,5 +710,17 @@ body {
 
     .coleccion-section {
         padding: 40px 15px;
+    }
+
+    /* Adaptación del panel flotante para móviles */
+    .panel-agendar-flotante {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .btn-agendar-general {
+        width: 100%;
     }
 }

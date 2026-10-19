@@ -41,6 +41,7 @@
         <main class="hero-banner">
             <img src="img/zigo_main.jpeg" alt="ziGO Logo" class="zigo_main">
         </main>
+        
         <!-- INICIO SECCIÓN DE LA COLECCIÓN -->
         <section class="coleccion-section">
             <h2 class="seccion-titulo">Nuestra Colección Exclusiva</h2>
@@ -48,99 +49,145 @@
             <!-- Contenedor Principal del Grid (3x3) -->
             <div class="armazon-grid">
                 
-                <!-- TARJETA 1 (Repite este bloque 9 veces con sus datos respectivos) -->
+                <!-- TARJETA 1 -->
                 <div class="armazon-card">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="seleccionar-armazon" value="ziGO Focus"> Seleccionar para cita
+                    </label>
                     <div class="imagen-container">
-                        <!-- REEMPLAZA "img/armazon_focus.png" CON LA URL DE TU FOTO -->
                         <img src="img/armazones/1.jpeg" alt="Armazón ziGO Focus" class="armazon-img">
                     </div>
                     <h3 class="armazon-nombre">ziGO Focus</h3>
                     <p class="armazon-material">Material: Acetato Premium</p>
-                    <a href="#" class="btn-agendar">Ver Detalles y Agendar</a>
+                    <button class="btn-detalles" onclick="abrirModal('ziGO Focus', 'img/armazones/1.jpeg', 'Acetato Premium', 'Diseño ergonómico ideal para uso diario con alta durabilidad y ligereza.')">Ver Detalles</button>
                 </div>
 
                 <!-- TARJETA 2 -->
                 <div class="armazon-card">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="seleccionar-armazon" value="ziGO Kinetic"> Seleccionar para cita
+                    </label>
                     <div class="imagen-container">
                         <img src="img/armazones/2.avif" alt="Armazón ziGO Kinetic" class="armazon-img">
                     </div>
                     <h3 class="armazon-nombre">ziGO Kinetic</h3>
                     <p class="armazon-material">Material: Titanio Ligero</p>
-                    <a href="#" class="btn-agendar">Ver Detalles y Agendar</a>
+                    <button class="btn-detalles" onclick="abrirModal('ziGO Kinetic', 'img/armazones/2.avif', 'Titanio Ligero', 'Estructura ultrafina y flexible de alta gama que aporta máxima comodidad.')">Ver Detalles</button>
                 </div>
 
                 <!-- TARJETA 3 -->
                 <div class="armazon-card">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="seleccionar-armazon" value="ziGO Metro"> Seleccionar para cita
+                    </label>
                     <div class="imagen-container">
                         <img src="img/armazones/3.jpeg" alt="Armazón ziGO Metro" class="armazon-img">
                     </div>
                     <h3 class="armazon-nombre">ziGO Metro</h3>
                     <p class="armazon-material">Material: Acetato Urbano</p>
-                    <a href="#" class="btn-agendar">Ver Detalles y Agendar</a>
+                    <button class="btn-detalles" onclick="abrirModal('ziGO Metro', 'img/armazones/3.jpeg', 'Acetato Urbano', 'Estilo moderno con detalles geométricos adaptados para la vida en la ciudad.')">Ver Detalles</button>
                 </div>
 
                 <!-- TARJETA 4 -->
                 <div class="armazon-card">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="seleccionar-armazon" value="ziGO Edge"> Seleccionar para cita
+                    </label>
                     <div class="imagen-container">
                         <img src="img/armazones/4.avif" alt="Armazón ziGO Edge" class="armazon-img">
                     </div>
                     <h3 class="armazon-nombre">ziGO Edge</h3>
                     <p class="armazon-material">Material: Polímero Resistente</p>
-                    <a href="#" class="btn-agendar">Ver Detalles y Agendar</a>
+                    <button class="btn-detalles" onclick="abrirModal('ziGO Edge', 'img/armazones/4.avif', 'Polímero Resistente', 'Máxima resistencia a impactos y flexibilidad superior para uso rudo.')">Ver Detalles</button>
                 </div>
 
                 <!-- TARJETA 5 -->
                 <div class="armazon-card">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="seleccionar-armazon" value="ziGO Urban"> Seleccionar para cita
+                    </label>
                     <div class="imagen-container">
                         <img src="img/armazones/5.webp" alt="Armazón ziGO Urban" class="armazon-img">
                     </div>
                     <h3 class="armazon-nombre">ziGO Urban</h3>
                     <p class="armazon-material">Material: Aleación Metálica</p>
-                    <a href="#" class="btn-agendar">Ver Detalles y Agendar</a>
+                    <button class="btn-detalles" onclick="abrirModal('ziGO Urban', 'img/armazones/5.webp', 'Aleación Metálica', 'Perfil delgado, sofisticado y elegante que se adapta a cualquier tipo de rostro.')">Ver Detalles</button>
                 </div>
 
                 <!-- TARJETA 6 -->
                 <div class="armazon-card">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="seleccionar-armazon" value="ziGO Sport"> Seleccionar para cita
+                    </label>
                     <div class="imagen-container">
                         <img src="img/armazones/6.webp" alt="Armazón ziGO Sport" class="armazon-img">
                     </div>
                     <h3 class="armazon-nombre">ziGO Sport</h3>
                     <p class="armazon-material">Material: TR90 Flexible</p>
-                    <a href="#" class="btn-agendar">Ver Detalles y Agendar</a>
+                    <button class="btn-detalles" onclick="abrirModal('ziGO Sport', 'img/armazones/6.webp', 'TR90 Flexible', 'Diseño aerodinámico y antideslizante enfocado en actividades dinámicas.')">Ver Detalles</button>
                 </div>
 
                 <!-- TARJETA 7 -->
                 <div class="armazon-card">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="seleccionar-armazon" value="ziGO Nova"> Seleccionar para cita
+                    </label>
                     <div class="imagen-container">
                         <img src="img/armazones/7.jpeg" alt="Armazón ziGO Nova" class="armazon-img">
                     </div>
                     <h3 class="armazon-nombre">ziGO Nova</h3>
                     <p class="armazon-material">Material: Diseño Minimalista</p>
-                    <a href="#" class="btn-agendar">Ver Detalles y Agendar</a>
+                    <button class="btn-detalles" onclick="abrirModal('ziGO Nova', 'img/armazones/7.jpeg', 'Diseño Minimalista', 'Apariencia limpia y sin marcos visibles para un look sutil y vanguardista.')">Ver Detalles</button>
                 </div>
 
                 <!-- TARJETA 8 -->
                 <div class="armazon-card">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="seleccionar-armazon" value="ziGO Flex"> Seleccionar para cita
+                    </label>
                     <div class="imagen-container">
                         <img src="img/armazones/8.webp" alt="Armazón ziGO Flex" class="armazon-img">
                     </div>
                     <h3 class="armazon-nombre">ziGO Flex</h3>
                     <p class="armazon-material">Material: Bisagra Reforzada</p>
-                    <a href="#" class="btn-agendar">Ver Detalles y Agendar</a>
+                    <button class="btn-detalles" onclick="abrirModal('ziGO Flex', 'img/armazones/8.webp', 'Bisagra Reforzada', 'Sistema de alta durabilidad en varillas para prevenir desgaste por apertura.')">Ver Detalles</button>
                 </div>
 
                 <!-- TARJETA 9 -->
                 <div class="armazon-card">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="seleccionar-armazon" value="ziGO Bold"> Seleccionar para cita
+                    </label>
                     <div class="imagen-container">
                         <img src="img/armazones/9.avif" alt="Armazón ziGO Bold" class="armazon-img">
                     </div>
                     <h3 class="armazon-nombre">ziGO Bold</h3>
                     <p class="armazon-material">Material: Estilo Contemporáneo</p>
-                    <a href="#" class="btn-agendar">Ver Detalles y Agendar</a>
+                    <button class="btn-detalles" onclick="abrirModal('ziGO Bold', 'img/armazones/9.avif', 'Estilo Contemporáneo', 'Armazón con presencia imponente que realza la personalidad y el carácter.')">Ver Detalles</button>
                 </div>
 
             </div>
         </section>
+
+        <!-- VENTANA MODAL (DIV FLOTANTE DE DETALLES) -->
+        <div id="modal-detalles" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <button class="modal-cerrar" onclick="cerrarModal()">&times;</button>
+                <img id="modal-img" src="" alt="Armazón" class="modal-img">
+                <h2 id="modal-titulo"></h2>
+                <p id="modal-material" class="modal-sub"></p>
+                <p id="modal-descripcion" class="modal-desc"></p>
+            </div>
+        </div>
+
+        <!-- PANEL FLOTANTE INFERIOR PARA AGENDAR -->
+        <div class="panel-agendar-flotante">
+            <p>Armazones seleccionados: <span id="contador-seleccionados">0</span></p>
+            <button id="btn-agendar-seleccionados" class="btn-agendar-general" onclick="irAColocarCita()">Agendar Cita con mi Selección</button>
+        </div>
+
+
+
         <!-- FIN SECCIÓN DE LA COLECCIÓN -->
         <footer class="footer-zigo">
             <div class="footer-container">
@@ -181,5 +228,6 @@
                 </div>
             </div>
         </footer>
+        <script src="script.js"></script>
     </body>    
 </html>
