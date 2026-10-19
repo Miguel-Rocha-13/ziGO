@@ -14,12 +14,18 @@
     <body>
         <header>
             <div class="header-anuncios">
-                <!-- Primer mensaje -->
                 <div class="mensaje m1">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span><strong>Esta semana operando en:</strong> Venustiano Carranza y toda la CDMX.</span>
+                </div>
+                <div class="mensaje m2">
+                    <i class="fas fa-gift"></i>
+                    <span><strong>Promoción:</strong> Examen de vista GRATIS al comprar armazones. ¡Agenda tu cita!</span>
+                </div>
+                <div class="mensaje m3">
                     ¡Obtén el 10% de descuento en tu primera compra!
                 </div>
-                <!-- Segundo mensaje -->
-                <div class="mensaje m2">
+                <div class="mensaje m4">
                     Comparte tu experiencia y recibe un 5% de descuento en tu siguiente compra
                 </div>
             </div>
@@ -35,9 +41,20 @@
         <main class="hero-banner">
             <img src="img/zigo_main.jpeg" alt="ziGO Logo" class="zigo_main">
         </main>
-        <!-- Google Calendar Appointment Scheduling begin -->
-        <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1BZNEyYLAmc23MFFg_WInKPKgnAAQMKsLk55UjvrKAzTShLd21feEK_I1KPmD11MixTNvW-nFm?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
-        <!-- end Google Calendar Appointment Scheduling -->
+        <!-- Inicio del calendario-->
+        <script src="https://bookings.nimbuspop.com/assets/embed.js"></script>
+            <div id="inline-container"></div>
+        <script>
+	        // Initialize inline embed after script loads
+            window.onload = function() {
+                Bookings.inlineEmbed({
+                    url: "https://zigo1.zohobookings.com/portal-embed#/5013970000000035045",
+                    parent: "#inline-container",
+                    height: "600px"
+                });
+            };
+        </script>
+        <!-- Fin del calendario -->        
         <footer class="footer-zigo">
             <div class="footer-container">
                 

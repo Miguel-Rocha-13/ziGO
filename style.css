@@ -1,15 +1,16 @@
 /* =========================================
    DISEÑO GENERAL DEL SITIO WEB
    ========================================= */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-a{
+a {
     color: black;
-    text-decoration: none; /* Quita el subrayado del enlace */
+    text-decoration: none;
 }
 
 body {
@@ -29,16 +30,16 @@ body {
    CONTENEDOR PRINCIPAL DE LA BARRA SUPERIOR
    ========================================= */
 
-   .header-anuncios {
-    background-color: #01707F; /* Fondo gris claro*/
-    color: white; /* Color del texto */
-    font-family: 'Roboto', sans-serif; /*Tipo de fuente*/
-    font-weight: 300;       /* Roboto Light */
-    font-style: italic;     /* Cursiva */
-    font-size: 30px; /* Tamaño de texto pequeño para el top header */
-    height: 40px; /* Altura fija de la barra */
-    position: relative; /* Necesario para contener los mensajes absolutos */
-    overflow: hidden; /* Oculta el texto cuando sale por los lados */
+.header-anuncios {
+    background-color: #01707F;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 16px; /* Ajustado ligeramente para que los textos largos respiren mejor */
+    height: 40px;
+    position: relative;
+    overflow: hidden;
     width: 100%;
     display: flex;
     align-items: center;
@@ -49,20 +50,47 @@ body {
     position: absolute;
     width: 100%;
     text-align: center;
-    opacity: 0; /* Invisibles por defecto */
-    transform: translateX(100%); /* Comienzan fuera de la pantalla por la derecha */
-    /* La animación dura 10 segundos en total y se repite infinitamente */
-    animation: deslizar-texto 10s infinite; 
+    opacity: 0;
+    transform: translateX(100%); 
+    /* Duración total a 16 segundos (4 segundos exactos por cada uno de los 4 mensajes) */
+    animation: deslizar-texto 16s infinite; 
 }
 
-/* Al segundo mensaje le damos un retraso de la mitad del tiempo total (5s) 
-   para que aparezca justo cuando el primero desaparece */
+/* Retrasos escalados cada 4 segundos (16s / 4 mensajes = 4s) */
+.m1 {
+    animation-delay: 0s;
+}
+
 .m2 {
-    animation-delay: 5s;
+    animation-delay: 4s;
+}
+
+.m3 {
+    animation-delay: 8s; 
+}
+
+.m4 { 
+    animation-delay: 12s; 
+}
+
+/* Reglas de la animación adaptadas para los 16 segundos */
+@keyframes deslizar-texto {
+    0% {
+        opacity: 0;
+        transform: translateX(100%); /* Entra por la derecha */
+    }
+    4%, 21% {
+        opacity: 1;
+        transform: translateX(0); /* Se queda estático y visible en el centro el tiempo justo */
+    }
+    25%, 100% {
+        opacity: 0;
+        transform: translateX(-100%); /* Sale hacia la izquierda y se oculta */
+    }
 }
 
 /* =========================================
-    DISEÑO DEL MENU PRINCIPAL
+   DISEÑO DEL MENU PRINCIPAL
    ========================================= */
 
 .menu-principal {
@@ -71,28 +99,28 @@ body {
     z-index: 10; 
     padding: 0;
     display: flex;
-    justify-content: center; /* Centra la "píldora" */
+    justify-content: center;
 }
 
 .menu-principal ul {
     list-style: none;
-    padding: 12px 40px; /* Espacio interno para crear la píldora */
+    padding: 12px 40px;
     margin: 0;
     display: flex;
     gap: 40px; 
-    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco semitransparente */
-    border-radius: 50px; /* Forma redonda */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra elegante */
-    backdrop-filter: blur(5px); /* Efecto de cristal moderno */
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
 }
 
 .nav-item {
-    color: #15527A; /* Azul marino de la marca. */
+    color: #15527A;
     text-decoration: none; 
     font-family: 'Roboto', sans-serif;
     font-weight: 500; 
     font-size: 14px;
-    letter-spacing: 1px; /* Separación de letras para toque premium */
+    letter-spacing: 1px;
     text-transform: uppercase; 
     position: relative; 
     padding-bottom: 5px; 
@@ -107,7 +135,7 @@ body {
     left: 0;
     width: 0%; 
     height: 2px; 
-    background-color: #01707F; /* Color de la línea animada */
+    background-color: #01707F;
     transition: width 0.3s ease-in-out; 
 }
 
@@ -115,10 +143,8 @@ body {
     width: 100%; 
 }
 
-/* Aqui termina el diseño del menú principal */
-
 /* =========================================
-   CONTENEDOR PRINCIPAL (MAIN)
+   CONTENEDOR PRINCIPAL (MAIN) Y HERO BANNER
    ========================================= */
 
 .hero-banner {
@@ -128,39 +154,35 @@ body {
     justify-content: center; 
     overflow: hidden; 
     position: relative;
-    background:  #e9ecef; /* Fondo blanco para que el difuminado se funda con la página */
+    background: #e9ecef;
 }
 
 .zigo_main {
     display: block;
-    width: 95%;          
+    width: 95%;         
     max-width: 500px;   
-    height: auto;        
-    /* Aplicación de la máscara radial (Vignette) */
+    height: auto;       
     -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
     mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
 }
-/* Aqui termina el contenedor principal */
-
 
 /* =========================================
-   DESEÑO DEL MENÚ SECUNDARIO
+   MENÚ SECUNDARIO (TARJETAS SUPERIORES)
    ========================================= */
+
 .content {
     display: flex;
-    flex-wrap: wrap; /*Hace que las tarjetas bajen si no caben en fila */
+    flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
-    background-color: #F3F4F6   ; 
-    border-radius: 10px; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
-    margin-top: 0; 
-    gap: 20px; /* Espacio entre los botones */
-    justify-content: center; /* Centrar los botones */ 
-    font-size: 10px; 
+    background-color: #F3F4F6;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 0;
+    gap: 20px;
+    font-size: 10px;
 }
 
-/* --- DISEÑO DE IMÁGENES Y BOTONES --- */
 .content-item { 
     flex: 1; 
     width: 100%; 
@@ -168,19 +190,18 @@ body {
     background-color: #FFFFFF; 
     border-radius: 20px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
-    padding: 25px 20px; /* <--- Relleno superior/ inferior para hacerlas menos altas */
+    padding: 25px 20px; 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
 }
 
-/* Nuevo contenedor para controlar el botón sobre la imagen */
 .imagen-contenedor {
     position: relative;
     width: 100%;
     flex: 1;
     border-radius: 12px;
-    overflow: hidden; /* Mantiene la imagen y el botón dentro de los bordes */
+    overflow: hidden;
 }
 
 .img_banner {
@@ -188,19 +209,18 @@ body {
     height: auto;
     display: block;
     margin-top: 0; 
-    margin-bottom: 0; /* Empuja el botón un poco hacia abajo */
-    transition: transform 0.4s ease; /* Transición suave para el zoom */
+    margin-bottom: 0;
+    transition: transform 0.4s ease;
 }
 
 .content a {
     flex: 1 1 250px; 
-    max-width: 320px; /* <--- Esto evita que se hagan gigantes */
+    max-width: 320px; 
     margin: 10px;    
     display: flex;   
     text-decoration: none;
 }
 
-/* Efecto sutil: La imagen hace un zoom lento cuando pasas el cursor por la tarjeta */
 .content a:hover .img_banner {
     transform: scale(1.05);
 }
@@ -208,44 +228,133 @@ body {
 .btn-zigo {
     position: static;
     align-self: center;
-    background-color: rgba(21, 82, 122, 0.95); /* Azul marino casi sólido */
+    background-color: rgba(21, 82, 122, 0.95);
     color: #FFFFFF;
     border-radius: 50px;
     padding: 12px 35px; 
     font-size: 13px; 
-    min-width: 180px; /* Anchura mínima para que no se vean aplastados */
-    width: 60%; /* Hace que todos tengan un tamaño similar */
+    min-width: 180px;
+    width: 60%;
     text-align: center;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra que le da profundidad */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(4px);
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
 }
 
-/* El botón cambia de color y se levanta ligeramente al hacer hover en la tarjeta */
 .content a:hover .btn-zigo {
-    background-color: #01707F; /* Cambia a turquesa */
+    background-color: #01707F;
     transform: translateY(-3px);
     box-shadow: 0 12px 20px rgba(1, 112, 127, 0.4);
 }
 
+/* =========================================
+   COLECCIÓN DE ARMAZONES (Única declaración)
+   ========================================= */
+
+.coleccion-section {
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+    font-family: 'Roboto', sans-serif;
+}
+
+.seccion-titulo {
+    text-align: center;
+    color: #091d33;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+.armazon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.armazon-card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.armazon-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.armazon-card .imagen-container {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.armazon-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.armazon-nombre {
+    font-size: 22px;
+    font-weight: bold;
+    color: #091d33;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.armazon-material {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.btn-agendar {
+    display: inline-block;
+    background-color: #165b66;
+    color: #ffffff;
+    padding: 12px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+}
+
+.btn-agendar:hover {
+    background-color: #0e3c43;
+}
 
 /* =========================================
    ESTILOS DEL FOOTER (PIE DE PÁGINA)
    ========================================= */
 
 .footer-zigo {
-    background-color: #F3F4F6; /* Mismo fondo gris claro de tus tarjetas */
+    background-color: #F3F4F6;
     padding: 50px 20px 30px 20px;
     font-family: 'Roboto', sans-serif;
     color: #333333;
     margin-top: 20px;
-    border-top: 1px solid #e5e7eb; /* Una pequeña línea separadora opcional */
+    border-top: 1px solid #e5e7eb;
 }
 
 .footer-container {
@@ -253,14 +362,13 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     max-width: 1000px;
-    margin: 0 auto; /* Centra el contenido en pantallas grandes */
+    margin: 0 auto;
     gap: 40px;
-    flex-wrap: wrap; /* Permite que el contenido baje en celulares */
+    flex-wrap: wrap;
 }
 
-/* --- Sección Izquierda: Testimonios --- */
 .testimonios-section {
-    flex: 2; /* Le da más espacio a los textos que a la dirección */
+    flex: 2;
     min-width: 300px;
 }
 
@@ -269,7 +377,7 @@ body {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #333333; /* O puedes usar tu azul marino #15527A */
+    color: #333333;
 }
 
 .testimonios-textos {
@@ -287,18 +395,16 @@ body {
     line-height: 1.6;
 }
 
-/* --- Sección Derecha: Información --- */
 .footer-info-section {
     flex: 1;
     min-width: 250px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Alinea todo hacia la derecha en PC */
+    align-items: flex-end;
     text-align: right;
     gap: 15px;
 }
 
-/* Redes Sociales */
 .redes-sociales {
     display: flex;
     gap: 20px;
@@ -310,19 +416,16 @@ body {
     transition: color 0.3s ease;
 }
 
-/* Efecto hover en las redes sociales */
 .redes-sociales a:hover {
-    color: #01707F; /* Color turquesa de tu marca */
+    color: #01707F;
 }
 
-/* Dirección */
 .direccion p {
     font-size: 12px;
     color: #666666;
     margin: 2px 0;
 }
 
-/* Enlaces Legales inferiores */
 .enlaces-legales {
     list-style: none;
     display: flex;
@@ -339,16 +442,127 @@ body {
 }
 
 .enlaces-legales a:hover {
-    color: #15527A; /* Azul marino */
+    color: #15527A;
     text-decoration: underline;
 }
 
+/* =========================================
+   ESTILOS PARA SECCIÓN DE TESTIMONIOS (GOOGLE)
+   ========================================= */
+
+.testimonios-google-section {
+    background-color: #f8f9fa;
+    padding: 50px 40px;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 0;
+}
+
+.testimonios-google-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonio-google-card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.testimonio-google-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.testimonio-google-card .avatar-placeholder {
+    width: 45px;
+    height: 45px;
+    background-color: #e0e0e0;
+    color: #091d33;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.testimonio-google-card .reviewer-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonio-google-card .reviewer-name {
+    font-weight: bold;
+    color: #091d33;
+    font-size: 16px;
+}
+
+.testimonio-google-card .review-date {
+    color: #757575;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.testimonio-google-card .google-icon-small {
+    width: 40px;
+    margin-left: auto;
+}
+
+.google-stars-yellow {
+    color: #fbc02d;
+    font-size: 16px;
+    margin-top: -5px;
+}
+
+.testimonio-google-card .review-text {
+    color: #424242;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-top: 5px;
+    font-style: italic;
+}
 
 /* =========================================
    Adaptación Automática para Celulares
    ========================================= */
+@media (max-width: 600px) {
+    /* Grids a una sola columna */
+    .testimonios-google-grid,
+    .armazon-grid {
+        grid-template-columns: 1fr;
+    }
 
-@media (max-width: 768px) {
+    .testimonios-google-section {
+        padding: 30px 20px;
+    }
+
+    .seccion-titulo {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .armazon-card {
+        padding: 15px;
+    }
+
+    .armazon-nombre {
+        font-size: 18px;
+    }
+
+    .btn-agendar {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
     .footer-container {
         flex-direction: column;
         align-items: center;
@@ -359,52 +573,39 @@ body {
     }
 
     .testimonios-textos {
-        flex-direction: column; /* Apila los dos testimonios uno debajo del otro */
+        flex-direction: column;
         gap: 15px;
     }
 
     .footer-info-section {
-        align-items: center; /* Centra el contenido en celulares */
+        align-items: center;
         text-align: center;
         margin-top: 20px;
         width: 100%;
     }
-}
 
-/* Reglas de la animación de derecha a izquierda */
-@keyframes deslizar-texto {
-    0% {
-        opacity: 0;
-        transform: translateX(100%); /* Entra por la derecha */
-  }
+    .header-anuncios {
+        font-size: 11px;
+    }
 
-    10%, 40% {
-        opacity: 1;
-        transform: translateX(0); /* Se queda quieto y visible en el centro durante 3 segundos */
-  }
-    50%, 100% {
-        opacity: 0;
-        transform: translateX(-100%); /* Sale deslizándose hacia la izquierda y se oculta */
-  }
-}
+    /* Ajustar el menú para dispositivos móviles */
+    .menu-principal ul {
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 0 10px;
+    }
 
-/* Reglas que solo se aplican en pantallas de 768px de ancho o menos (Celulares y Tablets pequeñas) */
-@media (max-width: 768px) {
-  
-  /* Achicar el texto del anuncio superior */
-.header-anuncios {
-    font-size: 11px; /* Letra más pequeña para que quepa el mensaje largo */
-  }
+    .nav-item {
+        font-size: 13px;
+    }
 
-  /* Ajustar el menú para que los elementos se envuelvan y reduzcan su separación */
- .menu-principal ul {
-    gap: 10px; 
-    flex-wrap: wrap; 
-    padding: 0 10px;
-  }
+    .avisos-container {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
 
-  /* Reducir ligeramente la letra del menú */
-.nav-item {
-    font-size: 13px;
-  }
+    .coleccion-section {
+        padding: 40px 15px;
+    }
 }
