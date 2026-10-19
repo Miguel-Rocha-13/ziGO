@@ -41,20 +41,37 @@
         <main class="hero-banner">
             <img src="img/zigo_main.jpeg" alt="ziGO Logo" class="zigo_main">
         </main>
+
         <!-- Inicio del calendario-->
         <script src="https://bookings.nimbuspop.com/assets/embed.js"></script>
-            <div id="inline-container"></div>
+        <div id="inline-container"></div>
         <script>
-	        // Initialize inline embed after script loads
+            // Initialize inline embed after script loads
             window.onload = function() {
+                // 1. Leemos los armazones de la URL ANTES de cargar Zoho
+                const urlParams = new URLSearchParams(window.location.search);
+                const armazones = urlParams.get('armazones');
+
+                // 2. Definimos tu URL base de Zoho
+                let urlZoho = "https://zigo1.zohobookings.com/portal-embed#/5013970000000035045";
+
+                // 3. Si el cliente eligió armazones, los pegamos a la URL
+                if (armazones) {
+                    const nombreCampo = encodeURIComponent("Notas o armazones de interés");
+                    const valorArmazones = encodeURIComponent(armazones);
+                    urlZoho += `?${nombreCampo}=${valorArmazones}`;
+                }
+
+                // 4. Zoho construye el calendario de 1 solo golpe con los datos ya adentro
                 Bookings.inlineEmbed({
-                    url: "https://zigo1.zohobookings.com/portal-embed#/5013970000000035045",
+                    url: urlZoho,
                     parent: "#inline-container",
-                    height: "600px"
+                    height: "800px"
                 });
             };
         </script>
         <!-- Fin del calendario -->        
+
         <footer class="footer-zigo">
             <div class="footer-container">
                 
@@ -62,17 +79,13 @@
                 <div class="testimonios-section">
                     <h3 class="testimonios-titulo">Testimonios Destacados</h3>
                     <div class="testimonios-textos">
-                        <!-- Testimonio 1 -->
                         <p class="cita">"Excelente servicio. Me encantó la variedad de armazones que tienen, mis lentes quedaron perfectos."</p>
-                        <!-- Testimonio 2 -->
                         <p class="cita">"La atención al cliente es increíble. Todo el proceso fue muy rápido y a un precio bastante accesible."</p>
                     </div>
                 </div>
 
                 <!-- Sección Derecha: Redes, Dirección y Enlaces -->
                 <div class="footer-info-section">
-                    
-                    <!-- Íconos de redes sociales -->
                     <div class="redes-sociales">
                         <a href="https://www.facebook.com/share/19WrQ62ZnZ/" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://www.instagram.com/skar_zigo/" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -83,13 +96,11 @@
                         <a href="https://api.whatsapp.com/send/?phone=5573839561" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     </div>
                     
-                    <!-- Dirección ficticia (cámbiala por la tuya) -->
                     <div class="direccion">
                         <p>Av. Principal 123, Local 4</p>
                         <p>Ciudad de México, CP 01234</p>
                     </div>
 
-                    <!-- Menú inferior -->
                     <ul class="enlaces-legales">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="#">Productos</a></li>
@@ -97,7 +108,6 @@
                         <li><a href="#">Contacto</a></li>
                     </ul>
                 </div>
-
             </div>
         </footer>
     </body>    

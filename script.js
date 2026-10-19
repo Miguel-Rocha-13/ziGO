@@ -20,7 +20,7 @@ function actualizarContador() {
     }
 }
 
-// Inicialización de eventos al cargar el documento
+// Inicialización de eventos al cargar el catálogo
 document.addEventListener('DOMContentLoaded', () => {
     const checkboxes = document.querySelectorAll('.seleccionar-armazon');
     checkboxes.forEach(box => {
@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarContador(); // Conteo inicial
 });
 
-// Sincronización al regresar de pestaña/página (Resuelve el problema del contador en 0)
+// Sincronización al regresar de pestaña/página (Resuelve el contador en 0)
 window.addEventListener('pageshow', actualizarContador);
 
-// Función de redirección automática hacia Zoho Bookings
+// Función de redirección hacia tu página interna de agenda
 function irAColocarCita() {
     const seleccionados = Array.from(document.querySelectorAll('.seleccionar-armazon:checked'))
                                .map(cb => cb.value);
@@ -42,19 +42,9 @@ function irAColocarCita() {
         return;
     }
 
-    // Texto con la lista de armazones elegidos
-    const listaArmazones = seleccionados.join(", ");
+    // Formateamos la lista de armazones seleccionados
+    const listaArmazones = encodeURIComponent(seleccionados.join(", "));
 
-    // URL base de tu portal en Zoho Bookings
-    const urlBase = "https://zigo1.zohobookings.com/portal-embed#/5013970000000035045";
-
-    // Nombre exacto del campo creado en Zoho Bookings para autollenado automático
-    const nombreCampoZoho = encodeURIComponent("Notas o armazones de interés");
-    const valorSeleccionado = encodeURIComponent(listaArmazones);
-
-    // Enlace final con el parámetro asignado de forma nativa
-    const urlFinal = `${urlBase}?${nombreCampoZoho}=${valorSeleccionado}`;
-
-    // Redirección directa limpia y sin ventanas intermedias
-    window.location.href = urlFinal;
+    // Redireccionamos a tu propia página (agenda.html) pasando los datos en la URL
+    window.location.href = `agenda.html?armazones=${listaArmazones}`;
 }
