@@ -9,52 +9,122 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=2.3">
+    <link rel="stylesheet" href="style.css?v=3.0">
     
     <!-- Librería de Inteligencia Artificial (Face-API sobre TensorFlow.js) -->
     <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 
     <style>
+        /* Estilos críticos inyectados con prioridad máxima */
+        .coleccion-section {
+            padding: 10px 20px 20px 20px !important;
+        }
+        .seccion-titulo {
+            margin-top: 5px !important;
+            margin-bottom: 10px !important;
+        }
         .probador-wrapper {
-            max-width: 650px; margin: 40px auto; background: white; padding: 35px;
-            border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center;
+            max-width: 540px !important;
+            margin: 5px auto 15px auto !important;
+            background: white !important;
+            padding: 20px !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+            text-align: center !important;
         }
         .selector-armazones-ia {
-            margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+            margin: 10px 0 15px 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 6px !important;
+            width: 100% !important;
         }
-        .selector-armazones-ia label { font-size: 14px; font-weight: bold; color: #091d33; }
+        .selector-armazones-ia label {
+            font-size: 14px !important;
+            font-weight: bold !important;
+            color: #091d33 !important;
+        }
         .selector-armazones-ia select {
-            padding: 10px 15px; border-radius: 8px; border: 2px solid #01707F;
-            font-family: 'Roboto', sans-serif; font-size: 14px; color: #091d33; background: #fff; cursor: pointer; width: 100%; max-width: 320px;
+            width: 100% !important;
+            max-width: 320px !important;
+            padding: 10px 15px !important;
+            border-radius: 8px !important;
+            border: 2px solid #01707F !important;
+            font-family: 'Roboto', sans-serif !important;
+            font-size: 14px !important;
+            color: #091d33 !important;
+            background: #fff !important;
+            cursor: pointer !important;
+            text-align: center !important;
+            text-align-last: center !important;
+            display: block !important;
+            margin: 0 auto !important;
         }
         .visor-container {
-            position: relative; width: 100%; max-width: 400px; margin: 0 auto;
-            border-radius: 12px; overflow: hidden; background-color: #e9ecef;
-            border: 2px dashed #ccc; min-height: 300px; display: flex; align-items: center; justify-content: center;
+            position: relative !important;
+            width: 100% !important;
+            max-width: 350px !important;
+            margin: 0 auto !important;
+            border-radius: 12px !important;
+            overflow: hidden !important;
+            background-color: #e9ecef !important;
+            border: 2px dashed #ccc !important;
+            min-height: 250px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
         }
-        #imagen-usuario { width: 100%; height: auto; display: none; }
-        #canvas-ia { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        #imagen-usuario { width: 100% !important; height: auto !important; display: none; }
+        #canvas-ia { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; }
         
-        .botones-accion { margin-top: 25px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        
+        .botones-accion {
+            margin-top: 15px !important;
+            display: flex !important;
+            gap: 15px !important;
+            justify-content: center !important;
+            flex-wrap: wrap !important;
+        }
         .btn-zigo-pro {
-            background: linear-gradient(135deg, #15527A 0%, #01707F 100%);
-            color: white; border: none; padding: 12px 25px; border-radius: 50px;
-            font-weight: bold; cursor: pointer; transition: all 0.3s ease;
-            text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px;
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-align: center;
+            background: linear-gradient(135deg, #15527A 0%, #01707F 100%) !important;
+            color: white !important;
+            border: none !important;
+            padding: 10px 22px !important;
+            border-radius: 50px !important;
+            font-weight: bold !important;
+            cursor: pointer !important;
+            text-transform: uppercase !important;
+            font-size: 13px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
         }
-        .btn-zigo-pro:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(1, 112, 127, 0.4); }
-        
         .btn-secundario {
-            background: #e9ecef; color: #091d33; border: none; padding: 12px 25px; border-radius: 50px;
-            font-weight: bold; cursor: pointer; transition: all 0.3s ease;
-            text-transform: uppercase; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: #e9ecef !important;
+            color: #091d33 !important;
+            border: none !important;
+            padding: 10px 22px !important;
+            border-radius: 50px !important;
+            font-weight: bold !important;
+            cursor: pointer !important;
+            text-transform: uppercase !important;
+            font-size: 13px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
         }
-        .btn-secundario:hover { background: #dde2e6; }
-
-        #upload-foto { display: none; }
-        #mensaje-ia { margin-top: 20px; padding: 15px; border-radius: 8px; font-weight: bold; display: none; font-size: 14px; text-align: left; }
+        #upload-foto { display: none !important; }
+        #mensaje-ia {
+            margin-top: 12px !important;
+            padding: 10px !important;
+            border-radius: 8px !important;
+            font-weight: bold !important;
+            display: none !important;
+            font-size: 13px !important;
+            text-align: left !important;
+        }
     </style>
 </head>
 <body>
@@ -84,9 +154,8 @@
         <h2 class="seccion-titulo">Probador Virtual y Asesor IA</h2>
         
         <div class="probador-wrapper">
-            <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Sube una foto clara de frente para probarte cualquiera de nuestros modelos virtuales con ajuste biométrico inteligente.</p>
+            <p style="color: #666; font-size: 13px; margin-bottom: 10px;">Sube una foto clara de frente para probarte nuestros modelos virtuales con ajuste biométrico inteligente.</p>
 
-            <!-- Selector Dinámico de Armazones -->
             <div class="selector-armazones-ia">
                 <label for="select-armazon"><i class="fas fa-glasses"></i> Selecciona el armazón a probar:</label>
                 <select id="select-armazon">
@@ -124,7 +193,7 @@
         </div>
     </section>
 
-    <!-- Asset de textura para los lentes -->
+    <!-- Asset de textura para los lentes oculto -->
     <img id="lente-asset" src="img/armazones/lente-prueba.webp" alt="Lente ziGO" style="display: none;">
 
     <footer class="footer-zigo">
@@ -167,7 +236,6 @@
 
         let ultimasDetecciones = null; 
 
-        // 1. CARGAR MODELOS DESDE CDN PÚBLICO
         window.onload = async () => {
             try {
                 loaderText.innerHTML = "<i class='fas fa-brain fa-spin'></i> Descargando modelos de IA...";
@@ -184,7 +252,6 @@
             }
         };
 
-        // 2. CAMBIO EN VIVO DE MODELO DE LENTES
         selectArmazon.addEventListener('change', () => {
             lenteAsset.src = selectArmazon.value;
             lenteAsset.onload = () => {
@@ -196,7 +263,6 @@
             };
         });
 
-        // 3. PROCESAMIENTO Y FILTRO ESTRICTO DE FRENTE
         imageUpload.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
@@ -235,36 +301,44 @@
                     const ojoIzq = landmarks.getLeftEye();
                     const ojoDer = landmarks.getRightEye();
 
-                    // VALIDACIÓN DE SEGURIDAD ANTIPERFIL: Comparamos la altura Y de ambos ojos
                     const diferenciaAlturaOjos = Math.abs(ojoIzq[0].y - ojoDer[3].y);
                     const distanciaOjosHorizontal = Math.abs(ojoDer[3].x - ojoIzq[0].x);
 
-                    // Si la diferencia vertical es mayor al 35% de la distancia horizontal, la cabeza está de perfil o muy inclinada
                     if (diferenciaAlturaOjos > (distanciaOjosHorizontal * 0.35)) {
                         mensajeIA.style.backgroundColor = "#f8d7da";
                         mensajeIA.style.color = "#721c24";
-                        mensajeIA.innerHTML = "<i class='fas fa-exclamation-triangle'></i> <strong>Foto no válida:</strong> Por favor, sube una fotografía estrictamente <strong>de frente</strong> para alinear los lentes de forma natural.";
+                        mensajeIA.innerHTML = "<i class='fas fa-exclamation-triangle'></i> <strong>Foto no válida:</strong> Sube una fotografía estrictamente <strong>de frente</strong>.";
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
                         return;
                     }
 
                     ultimasDetecciones = faceapi.resizeResults(detecciones, displaySize);
                     
-                    // Recomendación inteligente de estilo
                     const proporcion = ultimasDetecciones.detection.box.height / ultimasDetecciones.detection.box.width;
                     let tipoRostro = proporcion > 1.35 ? "Rostro Ovalado / Alargado" : "Rostro Redondo / Cuadrado";
-                    let recomendacion = proporcion > 1.35 
-                        ? "Te sugerimos armazones geométricos o rectangulares como el <strong>ziGO Focus</strong> o <strong>ziGO Metro</strong>." 
-                        : "Te sugerimos armazones con líneas marcadas o cuadrados como el <strong>ziGO Kinetic</strong> o <strong>ziGO Urban</strong>.";
+                    
+                    let armazonSugeridoValor = "";
+                    let recomendacionTexto = "";
+
+                    if (proporcion > 1.35) {
+                        armazonSugeridoValor = "img/armazones/1.jpeg"; 
+                        recomendacionTexto = "Te sugerimos armazones rectangulares. <strong>Hemos seleccionado el ziGO Focus para ti.</strong>";
+                    } else {
+                        armazonSugeridoValor = "img/armazones/2.avif"; 
+                        recomendacionTexto = "Te sugerimos armazones con curvas o cuadrados. <strong>Hemos seleccionado el ziGO Kinetic para ti.</strong>";
+                    }
+
+                    selectArmazon.value = armazonSugeridoValor;
+                    lenteAsset.src = armazonSugeridoValor;
 
                     mensajeIA.style.backgroundColor = "#d4edda";
                     mensajeIA.style.color = "#155724";
-                    mensajeIA.innerHTML = `<i class='fas fa-check-circle'></i> <strong>Análisis:</strong> ${tipoRostro}.<br><br>${recomendacion}`;
+                    mensajeIA.innerHTML = `<i class='fas fa-check-circle'></i> <strong>Análisis:</strong> ${tipoRostro}.<br><br>${recomendacionTexto}`;
 
-                    // Renderizar lentes adaptados
-                    colocarLentes(ultimasDetecciones.landmarks, ctx);
+                    lenteAsset.onload = () => {
+                        colocarLentes(ultimasDetecciones.landmarks, ctx);
+                    };
                     
-                    // Cambiar estados de botones
                     labelSubir.style.display = "none";
                     btnOtraFoto.style.display = "inline-flex";
                 } catch (error) {
@@ -276,18 +350,17 @@
             };
         });
 
-        // 4. MATEMÁTICA DE AJUSTE NATURAL SOBRE EL PUENTE NASAL
         function colocarLentes(landmarks, ctx) {
             const ojoIzq = landmarks.getLeftEye();
             const ojoDer = landmarks.getRightEye();
-            const nariz = landmarks.getNose();
 
-            // Centro basado en los ojos pero anclado al puente superior de la nariz para mayor naturalidad
             const centroX = (ojoIzq[0].x + ojoDer[3].x) / 2;
-            const puenteNarizY = nariz[0].y; // Punto alto de la nariz entre los ojos
+            const centroOjoIzqY = (ojoIzq[1].y + ojoIzq[4].y) / 2;
+            const centroOjoDerY = (ojoDer[1].y + ojoDer[4].y) / 2;
+            const centroOjosY = (centroOjoIzqY + centroOjoDerY) / 2;
 
             const distanciaOjos = ojoDer[3].x - ojoIzq[0].x;
-            const anchoLentes = distanciaOjos * 2.3; 
+            const anchoLentes = distanciaOjos * 2.25; 
             const aspectR = lenteAsset.naturalHeight / lenteAsset.naturalWidth;
             const altoLentes = anchoLentes * (isNaN(aspectR) ? 0.45 : aspectR); 
 
@@ -296,14 +369,12 @@
             const angulo = Math.atan2(deltaY, deltaX);
 
             ctx.save(); 
-            // Desplazamos ligeramente el eje Y hacia el puente de la nariz para que no queden en la frente
-            ctx.translate(centroX, puenteNarizY + (altoLentes * 0.15)); 
+            ctx.translate(centroX, centroOjosY - (altoLentes * 0.12)); 
             ctx.rotate(angulo); 
             ctx.drawImage(lenteAsset, -anchoLentes / 2, -altoLentes / 2, anchoLentes, altoLentes);
             ctx.restore(); 
         }
 
-        // 5. REINICIAR PROBADOR (Permite comenzar de 0 sin caché)
         function reiniciarProbador() {
             imageElement.style.display = 'none';
             imageElement.src = "";
@@ -316,6 +387,8 @@
             btnOtraFoto.style.display = "none";
             labelSubir.style.display = "inline-flex";
             ultimasDetecciones = null;
+            selectArmazon.selectedIndex = 0; 
+            lenteAsset.src = selectArmazon.value;
         }
     </script>
 </body>

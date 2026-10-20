@@ -524,8 +524,27 @@ body {
 .enlaces-legales a:hover { color: #15527A; text-decoration: underline; }
 
 /* =========================================
-   Responsive Design & Breakpoints
+   PROBADOR CON IA
    ========================================= */
+
+/* --- Correcciones definitivas para el Probador Virtual ziGO --- */
+.coleccion-section {
+    padding-top: 10px !important;
+    padding-bottom: 20px !important;
+}
+
+.seccion-titulo {
+    margin-top: 5px !important;
+    margin-bottom: 10px !important;
+}
+
+/* Forzar centrado real del menú desplegable en todos los navegadores */
+.selector-armazones-ia select {
+    text-align: center !important;
+    text-align-last: center !important;
+    -moz-text-align-last: center !important;
+}
+
 @media (max-width: 600px) {
     .testimonios-google-grid, .armazon-grid { grid-template-columns: 1fr; }
     .testimonios-google-section, .coleccion-section { padding: 30px 15px; }
