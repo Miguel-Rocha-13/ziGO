@@ -1,7 +1,6 @@
 /* =========================================
-   DISEÑO GENERAL DEL SITIO WEB
+   Reset & Variables Globales
    ========================================= */
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,16 +8,14 @@
 }
 
 a {
-    color: black;
+    color: inherit;
     text-decoration: none;
 }
 
 body {
-    margin: 0;
-    padding: 0;
     font-family: 'Roboto', sans-serif;
-    /* Agregamos un margen inferior para que el contenido no quede oculto detrás del panel flotante */
     padding-bottom: 70px; 
+    background-color: #ffffff;
 }
 
 .calendario-google {
@@ -29,13 +26,11 @@ body {
 }
 
 /* =========================================
-   CONTENEDOR PRINCIPAL DE LA BARRA SUPERIOR
+   Componentes Globales: Header & Nav
    ========================================= */
-
 .header-anuncios {
     background-color: #01707F;
     color: white;
-    font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-style: italic;
     font-size: 16px; 
@@ -62,23 +57,10 @@ body {
 .m4 { animation-delay: 12s; }
 
 @keyframes deslizar-texto {
-    0% {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-    4%, 21% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-    25%, 100% {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
+    0% { opacity: 0; transform: translateX(100%); }
+    4%, 21% { opacity: 1; transform: translateX(0); }
+    25%, 100% { opacity: 0; transform: translateX(-100%); }
 }
-
-/* =========================================
-   DISEÑO DEL MENU PRINCIPAL
-   ========================================= */
 
 .menu-principal {
     position: absolute;
@@ -92,7 +74,7 @@ body {
 .menu-principal ul {
     list-style: none;
     padding: 12px 40px;
-    margin: 0;
+    margin: 0; /* Restaurado a 0 para anclaje perfecto a la barra superior */
     display: flex;
     gap: 40px; 
     background-color: rgba(255, 255, 255, 0.95);
@@ -103,25 +85,20 @@ body {
 
 .nav-item {
     color: #15527A;
-    text-decoration: none; 
-    font-family: 'Roboto', sans-serif;
     font-weight: 500; 
     font-size: 14px;
     letter-spacing: 1px;
     text-transform: uppercase; 
     position: relative; 
     padding-bottom: 5px; 
-    white-space: nowrap;
     display: inline-block;
 }
 
 .nav-item::after {
     content: "";
     position: absolute;
-    bottom: 0; 
-    left: 0;
-    width: 0%; 
-    height: 2px; 
+    bottom: 0; left: 0;
+    width: 0%; height: 2px; 
     background-color: #01707F;
     transition: width 0.3s ease-in-out; 
 }
@@ -131,31 +108,24 @@ body {
 }
 
 /* =========================================
-   CONTENEDOR PRINCIPAL (MAIN) Y HERO BANNER
+   Layout: Hero & Dashboard Principal
    ========================================= */
-
 .hero-banner {
     width: 100%;
     padding: 5px; 
     display: flex;
     justify-content: center; 
     overflow: hidden; 
-    position: relative;
     background: #e9ecef;
 }
 
 .zigo_main {
-    display: block;
     width: 95%;         
     max-width: 500px;   
     height: auto;       
     -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
     mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
 }
-
-/* =========================================
-   MENÚ SECUNDARIO (TARJETAS SUPERIORES)
-   ========================================= */
 
 .content {
     display: flex;
@@ -165,15 +135,19 @@ body {
     background-color: #F3F4F6;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    margin-top: 0;
     gap: 20px;
-    font-size: 10px;
+}
+
+.content a {
+    flex: 1 1 250px; 
+    max-width: 320px; 
+    margin: 10px;    
+    display: flex;   
 }
 
 .content-item { 
-    flex: 1; 
     width: 100%; 
-    margin: 0; 
+    height: 100%; /* Obliga a la tarjeta a usar toda la altura disponible */
     background-color: #FFFFFF; 
     border-radius: 20px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
@@ -183,29 +157,23 @@ body {
     align-items: center; 
 }
 
+.content-item h1 {
+    font-size: 20px;
+    color: #091d33;
+    margin-bottom: 15px;
+}
+
 .imagen-contenedor {
-    position: relative;
     width: 100%;
-    flex: 1;
     border-radius: 12px;
     overflow: hidden;
+    margin-bottom: 15px;
 }
 
 .img_banner {
     width: 100%;
     height: auto;
-    display: block;
-    margin-top: 0; 
-    margin-bottom: 0;
     transition: transform 0.4s ease;
-}
-
-.content a {
-    flex: 1 1 250px; 
-    max-width: 320px; 
-    margin: 10px;    
-    display: flex;   
-    text-decoration: none;
 }
 
 .content a:hover .img_banner {
@@ -213,25 +181,19 @@ body {
 }
 
 .btn-zigo {
-    position: static;
-    align-self: center;
     background-color: rgba(21, 82, 122, 0.95);
     color: #FFFFFF;
     border-radius: 50px;
     padding: 12px 35px; 
     font-size: 13px; 
     min-width: 180px;
-    width: 60%;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(4px);
-    cursor: pointer;
     transition: all 0.3s ease;
-    white-space: nowrap;
+    margin-top: auto; /* Flexbox resorte: Fuerza la alineación al fondo de la tarjeta */
 }
 
 .content a:hover .btn-zigo {
@@ -241,13 +203,11 @@ body {
 }
 
 /* =========================================
-   COLECCIÓN DE ARMAZONES Y MODAL
+   Módulo: Colección de Armazones y Filtros
    ========================================= */
-
 .coleccion-section {
     padding: 60px 20px;
     background-color: #f8f9fa;
-    font-family: 'Roboto', sans-serif;
 }
 
 .seccion-titulo {
@@ -255,7 +215,36 @@ body {
     color: #091d33;
     font-size: 36px;
     font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* --- Sistema de Filtros UI --- */
+.filtros-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
     margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.btn-filtro {
+    padding: 10px 25px;
+    background-color: transparent;
+    color: #01707F;
+    border: 2px solid #01707F;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-filtro:hover, .btn-filtro.activo {
+    background-color: #01707F;
+    color: white;
+    box-shadow: 0 4px 15px rgba(1, 112, 127, 0.3);
 }
 
 .armazon-grid {
@@ -266,98 +255,121 @@ body {
     margin: 0 auto;
 }
 
+/* Transición fluida para los filtros */
 .armazon-card {
     background-color: #ffffff;
     padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease;
 }
 
 .armazon-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* --- CASILLA DE SELECCIÓN --- */
+/* --- CHECKBOX CUSTOMIZADO (Alta Gamma) --- */
 .checkbox-container {
     font-size: 13px;
     color: #555555;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
     cursor: pointer;
-}
-
-.checkbox-container input {
-    cursor: pointer;
-    width: 16px;
-    height: 16px;
-    accent-color: #01707F;
-}
-
-.armazon-card .imagen-container {
+    user-select: none;
     width: 100%;
-    height: 180px;
+    justify-content: center;
+}
+
+/* Ocultar el input original por defecto */
+.checkbox-container input {
+    display: none;
+}
+
+/* Crear la nueva casilla elegante */
+.checkmark {
+    width: 22px;
+    height: 22px;
+    background-color: transparent;
+    border: 2px solid #15527A;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+/* Cuando está seleccionado (Animación y Color) */
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #01707F;
+    border-color: #01707F;
+    transform: scale(1.1);
+}
+
+/* El ícono de "Palomita" (usando FontAwesome) */
+.checkbox-container input:checked ~ .checkmark::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: white;
+    font-size: 13px;
+}
+
+.texto-checkbox { font-weight: 500; }
 
 .armazon-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    width: 100%; height: 180px;
+    object-fit: contain; margin-bottom: 15px;
 }
 
-.armazon-nombre {
-    font-size: 22px;
-    font-weight: bold;
-    color: #091d33;
-    margin-bottom: 5px;
-    text-align: center;
-}
+.armazon-nombre { font-size: 22px; color: #091d33; margin-bottom: 5px; }
+.armazon-material { font-size: 14px; color: #666666; margin-bottom: 20px; }
 
-.armazon-material {
-    font-size: 14px;
-    color: #666666;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* --- NUEVO BOTÓN DE DETALLES --- */
+/* --- BOTÓN DE DETALLES ULTRA MODERNO --- */
 .btn-detalles {
-    display: inline-block;
-    background-color: #15527A;
+    background: linear-gradient(135deg, #15527A 0%, #01707F 100%);
     color: #ffffff;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 12px 20px;
+    border-radius: 50px; /* Forma de píldora */
     font-size: 13px;
     font-weight: bold;
     text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: auto;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     width: 100%;
+    margin-top: auto;
+    box-shadow: 0 4px 15px rgba(1, 112, 127, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espacio para el ícono */
 }
 
 .btn-detalles:hover {
-    background-color: #01707F;
+    background: linear-gradient(135deg, #01707F 0%, #15527A 100%);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(1, 112, 127, 0.5);
 }
 
-/* --- MODAL (VENTANA EMERGENTE) --- */
+.btn-detalles:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(1, 112, 127, 0.3);
+}
+
+/* =========================================
+   Módulo: Interfaz Flotante (Modal & Panel)
+   ========================================= */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     background-color: rgba(9, 29, 51, 0.75);
     display: flex;
     align-items: center;
@@ -369,197 +381,78 @@ body {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 10px;
-    max-width: 400px;
-    width: 90%;
+    max-width: 400px; width: 90%;
     text-align: center;
     position: relative;
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    font-family: 'Roboto', sans-serif;
 }
 
 .modal-cerrar {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 26px;
-    cursor: pointer;
-    color: #091d33;
+    top: 10px; right: 15px;
+    background: none; border: none;
+    font-size: 26px; cursor: pointer; color: #091d33;
 }
 
 .modal-img {
-    max-width: 100%;
-    height: 170px;
+    width: 100%; height: 170px;
     object-fit: contain;
     margin-bottom: 15px;
 }
 
-.modal-content h2 {
-    color: #091d33;
-    font-size: 22px;
-    margin-bottom: 5px;
-}
+.modal-content h2 { color: #091d33; font-size: 22px; margin-bottom: 5px; }
+.modal-sub { color: #01707F; font-weight: bold; font-size: 13px; margin-bottom: 12px; }
+.modal-desc { color: #555555; font-size: 13px; line-height: 1.5; }
 
-.modal-sub {
-    color: #01707F;
-    font-weight: bold;
-    font-size: 13px;
-    margin-bottom: 12px;
-}
-
-.modal-desc {
-    color: #555555;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-/* --- PANEL FLOTANTE INFERIOR --- */
+/* Barra Flotante Animada (UX Física) */
 .panel-agendar-flotante {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #091d33;
-    color: white;
+    bottom: 0; left: 0; width: 100%;
+    background-color: #091d33; color: white;
     padding: 12px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 -4px 15px rgba(0,0,0,0.25);
     z-index: 999;
-    font-family: 'Roboto', sans-serif;
-    font-size: 15px;
+    
+    /* Efecto Cubic-Bezier para simular rebote al emerger */
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.panel-agendar-flotante.activo {
+    transform: translateY(0);
 }
 
 .btn-agendar-general {
-    background-color: #01707F;
-    color: white;
-    border: none;
-    padding: 10px 22px;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: 13px;
+    background-color: #01707F; color: white;
+    border: none; padding: 10px 22px; border-radius: 4px;
+    font-weight: bold; cursor: pointer;
+    text-transform: uppercase; font-size: 13px;
     transition: background 0.3s;
 }
 
-.btn-agendar-general:hover {
-    background-color: #165b66;
+.btn-agendar-general:hover { background-color: #165b66; }
+
+/* Efecto de latido para el contador de items */
+.pop-anim {
+    display: inline-block;
+    animation: pop 0.4s ease-out;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.6); color: #01707F; }
+    100% { transform: scale(1); }
 }
 
 /* =========================================
-   ESTILOS DEL FOOTER (PIE DE PÁGINA)
+   Módulo: Social Proof (Testimonios)
    ========================================= */
-
-.footer-zigo {
-    background-color: #F3F4F6;
-    padding: 50px 20px 30px 20px;
-    font-family: 'Roboto', sans-serif;
-    color: #333333;
-    margin-top: 20px;
-    border-top: 1px solid #e5e7eb;
-}
-
-.footer-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1000px;
-    margin: 0 auto;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-.testimonios-section {
-    flex: 2;
-    min-width: 300px;
-}
-
-.testimonios-titulo {
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333333;
-}
-
-.testimonios-textos {
-    display: flex;
-    gap: 30px;
-    justify-content: center;
-}
-
-.cita {
-    flex: 1;
-    text-align: center;
-    font-size: 13px;
-    font-style: italic;
-    color: #555555;
-    line-height: 1.6;
-}
-
-.footer-info-section {
-    flex: 1;
-    min-width: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-    gap: 15px;
-}
-
-.redes-sociales {
-    display: flex;
-    gap: 20px;
-}
-
-.redes-sociales a {
-    color: #333333;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
-
-.redes-sociales a:hover {
-    color: #01707F;
-}
-
-.direccion p {
-    font-size: 12px;
-    color: #666666;
-    margin: 2px 0;
-}
-
-.enlaces-legales {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    padding: 0;
-    margin: 0;
-}
-
-.enlaces-legales a {
-    font-size: 12px;
-    color: #333333;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.enlaces-legales a:hover {
-    color: #15527A;
-    text-decoration: underline;
-}
-
-/* =========================================
-   ESTILOS PARA SECCIÓN DE TESTIMONIOS (GOOGLE)
-   ========================================= */
-
 .testimonios-google-section {
     background-color: #f8f9fa;
     padding: 50px 40px;
-    font-family: 'Roboto', sans-serif;
-    margin-top: 0;
 }
 
 .testimonios-google-grid {
@@ -572,155 +465,78 @@ body {
 
 .testimonio-google-card {
     background-color: #ffffff;
-    padding: 25px;
-    border-radius: 8px;
+    padding: 25px; border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    display: flex; flex-direction: column; gap: 15px;
 }
 
-.testimonio-google-card .card-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
+.card-header { display: flex; align-items: center; gap: 15px; }
 
-.testimonio-google-card .avatar-placeholder {
-    width: 45px;
-    height: 45px;
-    background-color: #e0e0e0;
-    color: #091d33;
-    font-size: 18px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.avatar-placeholder {
+    width: 45px; height: 45px;
+    background-color: #e0e0e0; color: #091d33;
+    font-size: 18px; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
     border-radius: 50%;
 }
 
-.testimonio-google-card .reviewer-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.testimonio-google-card .reviewer-name {
-    font-weight: bold;
-    color: #091d33;
-    font-size: 16px;
-}
-
-.testimonio-google-card .review-date {
-    color: #757575;
-    font-size: 12px;
-    margin-top: 2px;
-}
-
-.testimonio-google-card .google-icon-small {
-    width: 40px;
-    margin-left: auto;
-}
-
-.google-stars-yellow {
-    color: #fbc02d;
-    font-size: 16px;
-    margin-top: -5px;
-}
-
-.testimonio-google-card .review-text {
-    color: #424242;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-top: 5px;
-    font-style: italic;
-}
+.reviewer-name { font-weight: bold; color: #091d33; font-size: 16px; }
+.review-date { color: #757575; font-size: 12px; margin-top: 2px; }
+.google-icon-small { width: 40px; margin-left: auto; }
+.google-stars-yellow { color: #fbc02d; font-size: 16px; margin-top: -5px; }
+.review-text { color: #424242; font-size: 14px; line-height: 1.6; font-style: italic; }
 
 /* =========================================
-   Adaptación Automática para Celulares
+   Footer Global 
+   ========================================= */
+.footer-zigo {
+    background-color: #F3F4F6;
+    padding: 30px 20px;
+    color: #333333;
+    border-top: 1px solid #e5e7eb;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.redes-sociales { display: flex; gap: 20px; }
+.redes-sociales a { font-size: 18px; transition: color 0.3s ease; }
+.redes-sociales a:hover { color: #01707F; }
+
+.direccion p { font-size: 12px; color: #666666; margin: 2px 0; text-align: center; }
+
+.enlaces-legales {
+    list-style: none;
+    display: flex; gap: 15px;
+}
+
+.enlaces-legales a {
+    font-size: 12px; font-weight: bold;
+    transition: color 0.3s ease;
+}
+.enlaces-legales a:hover { color: #15527A; text-decoration: underline; }
+
+/* =========================================
+   Responsive Design & Breakpoints
    ========================================= */
 @media (max-width: 600px) {
-    .testimonios-google-grid,
-    .armazon-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .testimonios-google-section {
-        padding: 30px 20px;
-    }
-
-    .seccion-titulo {
-        font-size: 28px;
-        margin-bottom: 30px;
-    }
-
-    .armazon-card {
-        padding: 15px;
-    }
-
-    .armazon-nombre {
-        font-size: 18px;
-    }
-
-    .btn-detalles {
-        width: 100%;
-        text-align: center;
-        box-sizing: border-box;
-    }
-
-    .footer-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .calendario-google {
-        height: 1300px;
-    }
-
-    .testimonios-textos {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .footer-info-section {
-        align-items: center;
-        text-align: center;
-        margin-top: 20px;
-        width: 100%;
-    }
-
-    .header-anuncios {
-        font-size: 11px;
-    }
-
+    .testimonios-google-grid, .armazon-grid { grid-template-columns: 1fr; }
+    .testimonios-google-section, .coleccion-section { padding: 30px 15px; }
+    .seccion-titulo { font-size: 28px; margin-bottom: 30px; }
+    
     .menu-principal ul {
-        gap: 10px;
-        flex-wrap: wrap;
-        padding: 0 10px;
+        gap: 10px; flex-wrap: wrap; padding: 10px; margin-top: 5px;
     }
-
-    .nav-item {
-        font-size: 13px;
-    }
-
-    .avisos-container {
-        flex-direction: column;
-        gap: 15px;
-        align-items: flex-start;
-    }
-
-    .coleccion-section {
-        padding: 40px 15px;
-    }
-
-    /* Adaptación del panel flotante para móviles */
+    
     .panel-agendar-flotante {
-        flex-direction: column;
-        gap: 10px;
-        padding: 10px 15px;
-        font-size: 14px;
+        flex-direction: column; gap: 10px; padding: 10px 15px;
     }
-
-    .btn-agendar-general {
-        width: 100%;
-    }
+    .btn-agendar-general { width: 100%; }
 }

@@ -1,114 +1,96 @@
-<!Doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="img/logo.ico" type="image/x-icon">
-        <title>ziGO</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        <link rel="stylesheet" href="style.css?v=2.0">
-    </head>
-    <body>
-        <header>
-            <div class="header-anuncios">
-                <div class="mensaje m1">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span><strong>Esta semana operando en:</strong> Venustiano Carranza y toda la CDMX.</span>
-                </div>
-                <div class="mensaje m2">
-                    <i class="fas fa-gift"></i>
-                    <span><strong>Promoción:</strong> Examen de vista GRATIS al comprar armazones. ¡Agenda tu cita!</span>
-                </div>
-                <div class="mensaje m3">
-                    ¡Obtén el 10% de descuento en tu primera compra!
-                </div>
-                <div class="mensaje m4">
-                    Comparte tu experiencia y recibe un 5% de descuento en tu siguiente compra
-                </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon">
+    <title>ziGO | Agenda tu Cita</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=2.1">
+</head>
+<body>
+    <header>
+        <div class="header-anuncios">
+            <div class="mensaje m1">
+                <i class="fas fa-map-marker-alt"></i>
+                <span><strong>Operando en:</strong> Venustiano Carranza y toda la CDMX.</span>
             </div>
-        </header>
-        <nav class="menu-principal">
-            <ul>
-                <li><a href="index.html" class="nav-item">Inicio</a></li>
-                <li><a href="#services" class="nav-item">Productos</a></li>
-                <li><a href="#about" class="nav-item">Legal</a></li>
-                <li><a href="#contact" class="nav-item">Contacto</a></li>
+            <div class="mensaje m2">
+                <i class="fas fa-gift"></i>
+                <span><strong>Promoción:</strong> Examen de vista GRATIS al comprar armazones.</span>
+            </div>
+            <div class="mensaje m3">¡Obtén el 10% de descuento en tu primera compra!</div>
+            <div class="mensaje m4">Comparte tu experiencia y recibe un 5% de descuento en tu próxima compra</div>
+        </div>
+    </header>
+
+    <nav class="menu-principal">
+        <ul>
+            <li><a href="index.html" class="nav-item">Inicio</a></li>
+            <li><a href="#services" class="nav-item">Productos</a></li>
+            <li><a href="#about" class="nav-item">Legal</a></li>
+            <li><a href="#contact" class="nav-item">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <main class="hero-banner">
+        <img src="img/zigo_main.jpeg" alt="ziGO Logo" class="zigo_main">
+    </main>
+
+    <!-- Integración Backend: Calendario Zoho -->
+    <script src="https://bookings.nimbuspop.com/assets/embed.js"></script>
+    <div id="inline-container"></div>
+    <script>
+        window.onload = function() {
+            // Lectura de variables por GET
+            const urlParams = new URLSearchParams(window.location.search);
+            const armazones = urlParams.get('armazones');
+
+            let urlZoho = "https://zigo1.zohobookings.com/portal-embed#/5013970000000035045";
+
+            // Inyección en Iframe para auto-fill de la base de datos
+            if (armazones) {
+                const nombreCampo = encodeURIComponent("Notas o armazones de interés");
+                const valorArmazones = encodeURIComponent(armazones);
+                urlZoho += `?${nombreCampo}=${valorArmazones}`;
+            }
+
+            Bookings.inlineEmbed({
+                url: urlZoho,
+                parent: "#inline-container",
+                height: "800px"
+            });
+        };
+    </script>      
+
+    <!-- Componente Global: Footer -->
+    <footer class="footer-zigo">
+        <div class="footer-container">
+            <div class="redes-sociales">
+                <a href="https://www.facebook.com/share/19WrQ62ZnZ/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/skar_zigo/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.threads.com/@skar_zigo" target="_blank"><i class="fa-brands fa-threads"></i></a>
+                <a href="#"><i class="fab fa-x-twitter" target="_blank"></i></a>
+                <a href="https://www.tiktok.com/@zigo0399" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-telegram" target="_blank"></i></a>
+                <a href="https://api.whatsapp.com/send/?phone=5573839561" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            
+            <div class="direccion">
+                <p>Av. Principal 123, Local 4</p>
+                <p>Ciudad de México, CP 01234</p>
+            </div>
+
+            <ul class="enlaces-legales">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#">Productos</a></li>
+                <li><a href="#">Legal</a></li>
+                <li><a href="#">Contacto</a></li>
             </ul>
-        </nav>
-        <main class="hero-banner">
-            <img src="img/zigo_main.jpeg" alt="ziGO Logo" class="zigo_main">
-        </main>
-
-        <!-- Inicio del calendario-->
-        <script src="https://bookings.nimbuspop.com/assets/embed.js"></script>
-        <div id="inline-container"></div>
-        <script>
-            // Initialize inline embed after script loads
-            window.onload = function() {
-                // 1. Leemos los armazones de la URL ANTES de cargar Zoho
-                const urlParams = new URLSearchParams(window.location.search);
-                const armazones = urlParams.get('armazones');
-
-                // 2. Definimos tu URL base de Zoho
-                let urlZoho = "https://zigo1.zohobookings.com/portal-embed#/5013970000000035045";
-
-                // 3. Si el cliente eligió armazones, los pegamos a la URL
-                if (armazones) {
-                    const nombreCampo = encodeURIComponent("Notas o armazones de interés");
-                    const valorArmazones = encodeURIComponent(armazones);
-                    urlZoho += `?${nombreCampo}=${valorArmazones}`;
-                }
-
-                // 4. Zoho construye el calendario de 1 solo golpe con los datos ya adentro
-                Bookings.inlineEmbed({
-                    url: urlZoho,
-                    parent: "#inline-container",
-                    height: "800px"
-                });
-            };
-        </script>
-        <!-- Fin del calendario -->        
-
-        <footer class="footer-zigo">
-            <div class="footer-container">
-                
-                <!-- Sección Izquierda: Testimonios -->
-                <div class="testimonios-section">
-                    <h3 class="testimonios-titulo">Testimonios Destacados</h3>
-                    <div class="testimonios-textos">
-                        <p class="cita">"Excelente servicio. Me encantó la variedad de armazones que tienen, mis lentes quedaron perfectos."</p>
-                        <p class="cita">"La atención al cliente es increíble. Todo el proceso fue muy rápido y a un precio bastante accesible."</p>
-                    </div>
-                </div>
-
-                <!-- Sección Derecha: Redes, Dirección y Enlaces -->
-                <div class="footer-info-section">
-                    <div class="redes-sociales">
-                        <a href="https://www.facebook.com/share/19WrQ62ZnZ/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/skar_zigo/" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.threads.com/@skar_zigo" target="_blank"><i class="fa-brands fa-threads"></i></a>
-                        <a href="#"><i class="fab fa-x-twitter" target="_blank"></i></a>
-                        <a href="https://www.tiktok.com/@zigo0399" target="_blank"><i class="fab fa-tiktok"></i></a>
-                        <a href="#"><i class="fab fa-telegram" target="_blank"></i></a>
-                        <a href="https://api.whatsapp.com/send/?phone=5573839561" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                    
-                    <div class="direccion">
-                        <p>Av. Principal 123, Local 4</p>
-                        <p>Ciudad de México, CP 01234</p>
-                    </div>
-
-                    <ul class="enlaces-legales">
-                        <li><a href="#">Inicio</a></li>
-                        <li><a href="#">Productos</a></li>
-                        <li><a href="#">Legal</a></li>
-                        <li><a href="#">Contacto</a></li>
-                    </ul>
-                </div>
-            </div>
-        </footer>
-    </body>    
+        </div>
+    </footer>
+</body>    
 </html>
