@@ -458,7 +458,7 @@ body {
     font-size: 32px !important;
     font-weight: 700 !important;
     background: linear-gradient(135deg, #15527A 0%, #01707F 100%);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center !important;
     margin-bottom: 10px !important;

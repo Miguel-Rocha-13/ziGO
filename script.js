@@ -117,8 +117,8 @@ function inicializarProbadorIA() {
     faceMesh.setOptions({
         maxNumFaces: 1,
         refineLandmarks: true,
-        minDetectionConfidence: 0.5,
-        minTrackingConfidence: 0.5
+        minDetectionConfidence: 0.3, // Reducido para mayor sensibilidad en celulares
+        minTrackingConfidence: 0.3  // Reducido para evitar falsos negativos por sombra
     });
 
     faceMesh.onResults(onResultadosIA);
