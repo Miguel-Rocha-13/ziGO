@@ -114,11 +114,12 @@ function inicializarProbadorIA() {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
     }});
     
+    // Umbrales más flexibles para que detecte rostros incluso con luz media o sombras
     faceMesh.setOptions({
         maxNumFaces: 1,
         refineLandmarks: true,
-        minDetectionConfidence: 0.3, // Reducido para mayor sensibilidad en celulares
-        minTrackingConfidence: 0.3  // Reducido para evitar falsos negativos por sombra
+        minDetectionConfidence: 0.25,
+        minTrackingConfidence: 0.25
     });
 
     faceMesh.onResults(onResultadosIA);
@@ -166,11 +167,11 @@ function asignarEventosCamara() {
     if (btnCapturarFoto) {
         btnCapturarFoto.addEventListener('click', () => {
             const ctxTemp = document.createElement('canvas');
-            ctxTemp.width = videoElement.videoWidth || 640;
-            ctxTemp.height = videoElement.videoHeight || 480;
-            ctxTemp.getContext('2d').drawImage(videoElement, 0, 0, ctxTemp.width, ctxTemp.height);
+            ctxTemp.width = 640;
+            ctxTemp.height = 480;
+            ctxTemp.getContext('2d').drawImage(videoElement, 0, 0, 640, 480);
             detenerCamaraProbador();
-            procesarImagenSeleccionada(ctxTemp.toDataURL('image/png'));
+            procesarImagenSeleccionada(ctxTemp.toDataURL('image/jpeg', 0.9));
         });
     }
 
@@ -219,9 +220,10 @@ async function procesarImagenSeleccionada(fuenteImagen) {
     mensajeIA.style.backgroundColor = "#e2f0fb";
     mensajeIA.style.color = "#01707F";
     mensajeIA.style.borderLeft = "4px solid #15527A";
-    mensajeIA.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Optimizando imagen y escaneando puntos...";
+    mensajeIA.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Compensando luz y escaneando rostro...";
 
     const imgTemp = new Image();
+    imgTemp.crossOrigin = "anonymous";
     imgTemp.src = fuenteImagen;
     
     imgTemp.onload = async () => {
@@ -241,16 +243,30 @@ async function procesarImagenSeleccionada(fuenteImagen) {
         canvasTemp.width = w;
         canvasTemp.height = h;
         const ctxTemp = canvasTemp.getContext('2d');
+        
+        // Dibujar imagen original
         ctxTemp.drawImage(imgTemp, 0, 0, w, h);
 
-        const imagenLimpiaUrl = canvasTemp.toDataURL('image/png');
+        // Filtro inteligente de brillo/contraste automático para fotos con poca luz en celular
+        const imgData = ctxTemp.getImageData(0, 0, w, h);
+        const data = imgData.data;
+        const factor = 1.15; // Ligero realce de luz para compensar sombras
+        for (let i = 0; i < data.length; i += 4) {
+            data[i] = Math.min(255, data[i] * factor);     // Rojo
+            data[i+1] = Math.min(255, data[i+1] * factor); // Verde
+            data[i+2] = Math.min(255, data[i+2] * factor); // Azul
+        }
+        ctxTemp.putImageData(imgData, 0, 0);
 
-        imageElement.src = imagenLimpiaUrl;
+        const imagenOptimizadaUrl = canvasTemp.toDataURL('image/jpeg', 0.9);
+
+        imageElement.src = imagenOptimizadaUrl;
         imageElement.style.display = 'block';
 
         canvas.width = w;
         canvas.height = h;
 
+        // Forzar sincronización para dispositivos táctiles (móviles)
         setTimeout(async () => {
             try {
                 if (faceMesh) {
@@ -262,7 +278,7 @@ async function procesarImagenSeleccionada(fuenteImagen) {
                 console.error("Error en MediaPipe móvil:", error);
                 mostrarErrorProbador("No se pudo procesar la foto. Intenta subirla de nuevo.");
             }
-        }, 400);
+        }, 600);
     };
 }
 
@@ -341,9 +357,9 @@ function analizarGeometriaYRecomendar(puntos) {
         ${descripcion}<br><br>
         <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px;">Tus 3 recomendaciones ideales:</div>
         <div class="alternativas-container">
-            <button class="btn-alternativa principal" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}')"><i class="fas fa-star"></i> Ideal</button>
-            <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt1}')">Opción 2</button>
-            <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt2}')">Opción 3</button>
+            <button class="btn-alternativa principal" type="button" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}')"><i class="fas fa-star"></i> Ideal</button>
+            <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${alt1}')">Opción 2</button>
+            <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${alt2}')">Opción 3</button>
         </div>
     `;
 
