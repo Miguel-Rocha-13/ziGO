@@ -203,18 +203,19 @@ function detenerCamaraProbador() {
     }
 }
 
-// Función corregida para cambiar plantilla y actualizar el estado visual de los botones
-window.cambiarPlantillaActiva = function(rutaSvg, botonClickeado = null) {
+// Función corregida para cambiar plantilla y actualizar el botón activo correctamente
+window.cambiarPlantillaActiva = function(rutaSvg, indiceBtn = null) {
     const selectArmazon = document.getElementById('select-armazon');
     if (selectArmazon) selectArmazon.value = rutaSvg;
 
-    // Remover la clase de selección de TODOS los botones de alternativa
-    const botonesAlternativos = document.querySelectorAll('.btn-alternativa');
+    const botonesAlternativos = document.querySelectorAll('.alternativas-container .btn-alternativa');
     botonesAlternativos.forEach(btn => btn.classList.remove('activo-recomendado'));
 
-    // Si se pasó el botón por parámetro, iluminarlo
-    if (botonClickeado) {
-        botonClickeado.classList.add('activo-recomendado');
+    if (indiceBtn !== null && indiceBtn >= 0) {
+        const botonSeleccionado = document.getElementById(`btn-alt-${indiceBtn}`);
+        if (botonSeleccionado) {
+            botonSeleccionado.classList.add('activo-recomendado');
+        }
     } else {
         botonesAlternativos.forEach(btn => {
             if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(rutaSvg)) {
@@ -355,9 +356,9 @@ function analizarGeometriaYRecomendar(puntos) {
         ${descripcion}<br><br>
         <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px;">Tus 3 recomendaciones ideales:</div>
         <div class="alternativas-container">
-            <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}', this)"><i class="fas fa-star"></i> Ideal</button>
-            <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${alt1}', this)">Opción 2</button>
-            <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${alt2}', this)">Opción 3</button>
+            <button class="btn-alternativa" type="button" id="btn-alt-0" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}', 0)"><i class="fas fa-star"></i> Ideal</button>
+            <button class="btn-alternativa" type="button" id="btn-alt-1" onclick="window.cambiarPlantillaActiva('${alt1}', 1)">Opción 2</button>
+            <button class="btn-alternativa" type="button" id="btn-alt-2" onclick="window.cambiarPlantillaActiva('${alt2}', 2)">Opción 3</button>
         </div>
     `;
 
@@ -365,9 +366,8 @@ function analizarGeometriaYRecomendar(puntos) {
     document.getElementById('btn-ir-catalogo').style.display = 'inline-flex';
     document.getElementById('btn-otra-foto').style.display = "inline-flex";
 
-    // Cargar por defecto el armazón principal y marcar su botón
-    const primerBoton = document.querySelector('.btn-alternativa');
-    window.cambiarPlantillaActiva(armazonPrincipal, primerBoton);
+    // Cargar por defecto el armazón principal y marcar el botón 0
+    window.cambiarPlantillaActiva(armazonPrincipal, 0);
 }
 
 function dibujarLentesMediaPipe(puntos) {
