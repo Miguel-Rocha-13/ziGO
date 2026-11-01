@@ -374,9 +374,25 @@ function dibujarLentesMediaPipe(puntos) {
     const canvas = document.getElementById('canvas-ia');
     const ctx = canvas.getContext('2d');
     
-    const ojoIzquierdoInterno = puntos[133]; 
-    const ojoDerechoInterno = puntos[362];
-    const tabiqueNasal = puntos[168]; 
+    // Asegurar dimensiones reales basadas en el contenedor visual actual en pantalla
+    const displayWidth = canvas.clientWidth || canvas.width;
+    const displayHeight = canvas.clientHeight || canvas.height;
+    
+    if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+        canvas.width = displayWidth;
+        canvas.height = displayHeight;
+    }
+
+    const ancho = canvas.width;
+    const alto = canvas.height;
+
+    // Recalcular puntos proporcionales a la pantalla actual del dispositivo
+    const escalaX = ancho / (canvas.naturalWidth || ancho);
+    const escalaY = alto / (canvas.naturalHeight || alto);
+
+    const ojoIzquierdoInterno = { x: puntos[133].x * escalaX, y: puntos[133].y * escalaY }; 
+    const ojoDerechoInterno = { x: puntos[362].x * escalaX, y: puntos[362].y * escalaY };
+    const tabiqueNasal = { x: puntos[168].x * escalaX, y: puntos[168].y * escalaY }; 
     
     const deltaY = ojoDerechoInterno.y - ojoIzquierdoInterno.y;
     const deltaX = ojoDerechoInterno.x - ojoIzquierdoInterno.x;
@@ -384,7 +400,7 @@ function dibujarLentesMediaPipe(puntos) {
 
     const sienIzquierda = puntos[234];
     const sienDerecha = puntos[454];
-    const anchoRostro = Math.hypot(sienDerecha.x - sienIzquierda.x, sienDerecha.y - sienIzquierda.y);
+    const anchoRostro = Math.hypot(sienDerecha.x - sienIzquierda.x, sienDerecha.y - sienIzquierda.y) * escalaX;
     
     const anchoLentes = anchoRostro * 1.05; 
     const aspectR = lenteActivo.naturalHeight / lenteActivo.naturalWidth;
