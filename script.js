@@ -203,7 +203,6 @@ function detenerCamaraProbador() {
     }
 }
 
-// Función corregida para cambiar plantilla y actualizar el botón activo correctamente
 window.cambiarPlantillaActiva = function(rutaSvg, indiceBtn = null) {
     const selectArmazon = document.getElementById('select-armazon');
     if (selectArmazon) selectArmazon.value = rutaSvg;
@@ -264,8 +263,6 @@ async function procesarImagenSeleccionada(fuenteImagen) {
 
         canvas.width = w;
         canvas.height = h;
-        canvas.style.width = "100%";
-        canvas.style.height = "auto";
 
         setTimeout(async () => {
             try {
@@ -366,7 +363,6 @@ function analizarGeometriaYRecomendar(puntos) {
     document.getElementById('btn-ir-catalogo').style.display = 'inline-flex';
     document.getElementById('btn-otra-foto').style.display = "inline-flex";
 
-    // Cargar por defecto el armazón principal y marcar el botón 0
     window.cambiarPlantillaActiva(armazonPrincipal, 0);
 }
 
@@ -374,25 +370,12 @@ function dibujarLentesMediaPipe(puntos) {
     const canvas = document.getElementById('canvas-ia');
     const ctx = canvas.getContext('2d');
     
-    // Asegurar dimensiones reales basadas en el contenedor visual actual en pantalla
-    const displayWidth = canvas.clientWidth || canvas.width;
-    const displayHeight = canvas.clientHeight || canvas.height;
-    
-    if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
-        canvas.width = displayWidth;
-        canvas.height = displayHeight;
-    }
-
     const ancho = canvas.width;
     const alto = canvas.height;
-
-    // Recalcular puntos proporcionales a la pantalla actual del dispositivo
-    const escalaX = ancho / (canvas.naturalWidth || ancho);
-    const escalaY = alto / (canvas.naturalHeight || alto);
-
-    const ojoIzquierdoInterno = { x: puntos[133].x * escalaX, y: puntos[133].y * escalaY }; 
-    const ojoDerechoInterno = { x: puntos[362].x * escalaX, y: puntos[362].y * escalaY };
-    const tabiqueNasal = { x: puntos[168].x * escalaX, y: puntos[168].y * escalaY }; 
+    
+    const ojoIzquierdoInterno = puntos[133]; 
+    const ojoDerechoInterno = puntos[362];
+    const tabiqueNasal = puntos[168]; 
     
     const deltaY = ojoDerechoInterno.y - ojoIzquierdoInterno.y;
     const deltaX = ojoDerechoInterno.x - ojoIzquierdoInterno.x;
@@ -400,13 +383,13 @@ function dibujarLentesMediaPipe(puntos) {
 
     const sienIzquierda = puntos[234];
     const sienDerecha = puntos[454];
-    const anchoRostro = Math.hypot(sienDerecha.x - sienIzquierda.x, sienDerecha.y - sienIzquierda.y) * escalaX;
+    const anchoRostro = Math.hypot(sienDerecha.x - sienIzquierda.x, sienDerecha.y - sienIzquierda.y);
     
     const anchoLentes = anchoRostro * 1.05; 
     const aspectR = lenteActivo.naturalHeight / lenteActivo.naturalWidth;
     const altoLentes = anchoLentes * (isNaN(aspectR) ? 0.45 : aspectR); 
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, ancho, alto);
     ctx.save(); 
     ctx.translate(tabiqueNasal.x, tabiqueNasal.y); 
     ctx.rotate(angulo); 
