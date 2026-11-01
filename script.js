@@ -114,12 +114,11 @@ function inicializarProbadorIA() {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
     }});
     
-    // Umbrales altamente flexibles para evitar bloqueos por iluminación
     faceMesh.setOptions({
         maxNumFaces: 1,
         refineLandmarks: true,
-        minDetectionConfidence: 0.15,
-        minTrackingConfidence: 0.15
+        minDetectionConfidence: 0.2,
+        minTrackingConfidence: 0.2
     });
 
     faceMesh.onResults(onResultadosIA);
@@ -191,7 +190,7 @@ function asignarEventosCamara() {
 
     if (selectArmazon) {
         selectArmazon.addEventListener('change', () => {
-            cambiarPlantillaActiva(selectArmazon.value);
+            window.cambiarPlantillaActiva(selectArmazon.value);
         });
     }
 }
@@ -204,9 +203,26 @@ function detenerCamaraProbador() {
     }
 }
 
-window.cambiarPlantillaActiva = function(rutaSvg) {
+// Función mejorada para cambiar plantilla y actualizar el estado visual de los botones
+window.cambiarPlantillaActiva = function(rutaSvg, botonClickeado = null) {
     const selectArmazon = document.getElementById('select-armazon');
     if (selectArmazon) selectArmazon.value = rutaSvg;
+
+    // Actualizar estilo visual de los botones de alternativa (marcar cuál está activo)
+    const botonesAlternativos = document.querySelectorAll('.btn-alternativa');
+    botonesAlternativos.forEach(btn => btn.classList.remove('activo-recomendado'));
+
+    if (botonClickeado) {
+        botonClickeado.classList.add('activo-recomendado');
+    } else {
+        // Si se seleccionó desde el select o automático, buscar el botón correspondiente
+        botonesAlternativos.forEach(btn => {
+            if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(rutaSvg)) {
+                btn.classList.add('activo-recomendado');
+            }
+        });
+    }
+
     lenteActivo.src = rutaSvg;
     lenteActivo.onload = () => {
         if (ultimosPuntosFaciales) {
@@ -224,16 +240,16 @@ async function procesarImagenSeleccionada(fuenteImagen) {
     mensajeIA.style.backgroundColor = "#e2f0fb";
     mensajeIA.style.color = "#01707F";
     mensajeIA.style.borderLeft = "4px solid #15527A";
-    mensajeIA.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Procesando imagen y escaneando rostro...";
+    mensajeIA.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Analizando geometría facial...";
 
     const imgTemp = new Image();
     imgTemp.crossOrigin = "anonymous";
     imgTemp.src = fuenteImagen;
     
     imgTemp.onload = async () => {
-        // Asignar el tamaño real nativo para evitar que la imagen se vea pequeña o deforme
-        const w = imgTemp.naturalWidth || imgTemp.width;
-        const h = imgTemp.naturalHeight || imgTemp.height;
+        // Normalizar dimensiones para que coincidan perfectamente en móviles y PC
+        const w = imgTemp.naturalWidth || imgTemp.width || 640;
+        const h = imgTemp.naturalHeight || imgTemp.height || 480;
 
         const canvasTemp = document.createElement('canvas');
         canvasTemp.width = w;
@@ -241,29 +257,16 @@ async function procesarImagenSeleccionada(fuenteImagen) {
         const ctxTemp = canvasTemp.getContext('2d');
         ctxTemp.drawImage(imgTemp, 0, 0, w, h);
 
-        // Ajuste automático de brillo/exposición para ambientes con poca luz
-        try {
-            const imgData = ctxTemp.getImageData(0, 0, w, h);
-            const data = imgData.data;
-            const factor = 1.25; // Aumento de luminosidad para evitar errores de sombra
-            for (let i = 0; i < data.length; i += 4) {
-                data[i] = Math.min(255, data[i] * factor);     
-                data[i+1] = Math.min(255, data[i+1] * factor); 
-                data[i+2] = Math.min(255, data[i+2] * factor); 
-            }
-            ctxTemp.putImageData(imgData, 0, 0);
-        } catch (err) {
-            console.log("Ajuste de luz omitido por seguridad CORS:", err);
-        }
-
         const imagenOptimizadaUrl = canvasTemp.toDataURL('image/jpeg', 0.95);
 
         imageElement.src = imagenOptimizadaUrl;
         imageElement.style.display = 'block';
 
-        // Sincronizar dimensiones exactas del canvas superpuesto con la imagen
+        // Sincronizar dimensiones exactas del canvas de dibujo con la imagen mostrada
         canvas.width = w;
         canvas.height = h;
+        canvas.style.width = "100%";
+        canvas.style.height = "auto";
 
         setTimeout(async () => {
             try {
@@ -276,13 +279,13 @@ async function procesarImagenSeleccionada(fuenteImagen) {
                 console.error("Error en MediaPipe:", error);
                 mostrarErrorProbador("No se pudo procesar la foto. Intenta de nuevo.");
             }
-        }, 400);
+        }, 500);
     };
 }
 
 function onResultadosIA(results) {
     if (!results.multiFaceLandmarks || results.multiFaceLandmarks.length === 0) {
-        mostrarErrorProbador("No se detectó un rostro claro. Intenta colocarte de frente a la cámara.");
+        mostrarErrorProbador("No se detectó un rostro claro. Intenta con mejor iluminación o de frente.");
         return;
     }
 
@@ -354,9 +357,9 @@ function analizarGeometriaYRecomendar(puntos) {
         ${descripcion}<br><br>
         <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px;">Tus 3 recomendaciones ideales:</div>
         <div class="alternativas-container">
-            <button class="btn-alternativa principal" type="button" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}')"><i class="fas fa-star"></i> Ideal</button>
-            <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${alt1}')">Opción 2</button>
-            <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${alt2}')">Opción 3</button>
+            <button class="btn-alternativa principal" type="button" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}', this)"><i class="fas fa-star"></i> Ideal</button>
+            <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${alt1}', this)">Opción 2</button>
+            <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${alt2}', this)">Opción 3</button>
         </div>
     `;
 
@@ -364,7 +367,9 @@ function analizarGeometriaYRecomendar(puntos) {
     document.getElementById('btn-ir-catalogo').style.display = 'inline-flex';
     document.getElementById('btn-otra-foto').style.display = "inline-flex";
 
-    window.cambiarPlantillaActiva(armazonPrincipal);
+    // Cargar por defecto el armazón principal y marcar su botón
+    const primerBoton = document.querySelector('.btn-alternativa');
+    window.cambiarPlantillaActiva(armazonPrincipal, primerBoton);
 }
 
 function dibujarLentesMediaPipe(puntos) {
