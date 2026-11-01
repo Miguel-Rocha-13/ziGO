@@ -474,6 +474,14 @@ body {
     line-height: 1.5;
 }
 
+.btn-alternativa.activo-recomendado {
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+    border: 1px solid #155724 !important;
+    box-shadow: 0 0 10px rgba(1, 112, 127, 0.4);
+    transform: scale(1.05);
+}
+
 
 /* =========================================
    Módulo: Social Proof (Testimonios)
