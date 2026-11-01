@@ -114,12 +114,12 @@ function inicializarProbadorIA() {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
     }});
     
-    // Umbrales más flexibles para que detecte rostros incluso con luz media o sombras
+    // Umbrales altamente flexibles para evitar bloqueos por iluminación
     faceMesh.setOptions({
         maxNumFaces: 1,
         refineLandmarks: true,
-        minDetectionConfidence: 0.25,
-        minTrackingConfidence: 0.25
+        minDetectionConfidence: 0.15,
+        minTrackingConfidence: 0.15
     });
 
     faceMesh.onResults(onResultadosIA);
@@ -166,12 +166,16 @@ function asignarEventosCamara() {
 
     if (btnCapturarFoto) {
         btnCapturarFoto.addEventListener('click', () => {
-            const ctxTemp = document.createElement('canvas');
-            ctxTemp.width = 640;
-            ctxTemp.height = 480;
-            ctxTemp.getContext('2d').drawImage(videoElement, 0, 0, 640, 480);
+            const canvasTemp = document.createElement('canvas');
+            const vW = videoElement.videoWidth || 640;
+            const vH = videoElement.videoHeight || 480;
+            
+            canvasTemp.width = vW;
+            canvasTemp.height = vH;
+            canvasTemp.getContext('2d').drawImage(videoElement, 0, 0, vW, vH);
+            
             detenerCamaraProbador();
-            procesarImagenSeleccionada(ctxTemp.toDataURL('image/jpeg', 0.9));
+            procesarImagenSeleccionada(canvasTemp.toDataURL('image/jpeg', 0.95));
         });
     }
 
@@ -220,53 +224,47 @@ async function procesarImagenSeleccionada(fuenteImagen) {
     mensajeIA.style.backgroundColor = "#e2f0fb";
     mensajeIA.style.color = "#01707F";
     mensajeIA.style.borderLeft = "4px solid #15527A";
-    mensajeIA.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Compensando luz y escaneando rostro...";
+    mensajeIA.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Procesando imagen y escaneando rostro...";
 
     const imgTemp = new Image();
     imgTemp.crossOrigin = "anonymous";
     imgTemp.src = fuenteImagen;
     
     imgTemp.onload = async () => {
-        const canvasTemp = document.createElement('canvas');
-        const maxDim = 800;
-        let w = imgTemp.width;
-        let h = imgTemp.height;
-        
-        if (w > h && w > maxDim) {
-            h *= maxDim / w;
-            w = maxDim;
-        } else if (h > maxDim) {
-            w *= maxDim / h;
-            h = maxDim;
-        }
+        // Asignar el tamaño real nativo para evitar que la imagen se vea pequeña o deforme
+        const w = imgTemp.naturalWidth || imgTemp.width;
+        const h = imgTemp.naturalHeight || imgTemp.height;
 
+        const canvasTemp = document.createElement('canvas');
         canvasTemp.width = w;
         canvasTemp.height = h;
         const ctxTemp = canvasTemp.getContext('2d');
-        
-        // Dibujar imagen original
         ctxTemp.drawImage(imgTemp, 0, 0, w, h);
 
-        // Filtro inteligente de brillo/contraste automático para fotos con poca luz en celular
-        const imgData = ctxTemp.getImageData(0, 0, w, h);
-        const data = imgData.data;
-        const factor = 1.15; // Ligero realce de luz para compensar sombras
-        for (let i = 0; i < data.length; i += 4) {
-            data[i] = Math.min(255, data[i] * factor);     // Rojo
-            data[i+1] = Math.min(255, data[i+1] * factor); // Verde
-            data[i+2] = Math.min(255, data[i+2] * factor); // Azul
+        // Ajuste automático de brillo/exposición para ambientes con poca luz
+        try {
+            const imgData = ctxTemp.getImageData(0, 0, w, h);
+            const data = imgData.data;
+            const factor = 1.25; // Aumento de luminosidad para evitar errores de sombra
+            for (let i = 0; i < data.length; i += 4) {
+                data[i] = Math.min(255, data[i] * factor);     
+                data[i+1] = Math.min(255, data[i+1] * factor); 
+                data[i+2] = Math.min(255, data[i+2] * factor); 
+            }
+            ctxTemp.putImageData(imgData, 0, 0);
+        } catch (err) {
+            console.log("Ajuste de luz omitido por seguridad CORS:", err);
         }
-        ctxTemp.putImageData(imgData, 0, 0);
 
-        const imagenOptimizadaUrl = canvasTemp.toDataURL('image/jpeg', 0.9);
+        const imagenOptimizadaUrl = canvasTemp.toDataURL('image/jpeg', 0.95);
 
         imageElement.src = imagenOptimizadaUrl;
         imageElement.style.display = 'block';
 
+        // Sincronizar dimensiones exactas del canvas superpuesto con la imagen
         canvas.width = w;
         canvas.height = h;
 
-        // Forzar sincronización para dispositivos táctiles (móviles)
         setTimeout(async () => {
             try {
                 if (faceMesh) {
@@ -275,17 +273,16 @@ async function procesarImagenSeleccionada(fuenteImagen) {
                     mostrarErrorProbador("El motor MediaPipe no está listo.");
                 }
             } catch (error) {
-                console.error("Error en MediaPipe móvil:", error);
-                mostrarErrorProbador("No se pudo procesar la foto. Intenta subirla de nuevo.");
+                console.error("Error en MediaPipe:", error);
+                mostrarErrorProbador("No se pudo procesar la foto. Intenta de nuevo.");
             }
-        }, 600);
+        }, 400);
     };
 }
 
-// Callback de MediaPipe con los 468 puntos tridimensionales
 function onResultadosIA(results) {
     if (!results.multiFaceLandmarks || results.multiFaceLandmarks.length === 0) {
-        mostrarErrorProbador("No se detectó un rostro claro. Intenta con mejor iluminación o de frente.");
+        mostrarErrorProbador("No se detectó un rostro claro. Intenta colocarte de frente a la cámara.");
         return;
     }
 
