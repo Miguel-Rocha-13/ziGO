@@ -449,6 +449,33 @@ body {
 }
 
 /* =========================================
+   PROBADOR CON IA
+   ========================================= */
+
+/* Título Principal del Probador Profesional */
+.seccion-titulo {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    background: linear-gradient(135deg, #15527A 0%, #01707F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center !important;
+    margin-bottom: 10px !important;
+    letter-spacing: -0.5px;
+}
+
+/* Subtítulo de descripción */
+.probador-wrapper p {
+    font-size: 14px !important;
+    color: #555 !important;
+    max-width: 460px;
+    margin: 0 auto 15px auto !important;
+    line-height: 1.5;
+}
+
+
+/* =========================================
    Módulo: Social Proof (Testimonios)
    ========================================= */
 .testimonios-google-section {
