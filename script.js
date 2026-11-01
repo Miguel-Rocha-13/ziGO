@@ -203,19 +203,19 @@ function detenerCamaraProbador() {
     }
 }
 
-// Función mejorada para cambiar plantilla y actualizar el estado visual de los botones
+// Función corregida para cambiar plantilla y actualizar el estado visual de los botones
 window.cambiarPlantillaActiva = function(rutaSvg, botonClickeado = null) {
     const selectArmazon = document.getElementById('select-armazon');
     if (selectArmazon) selectArmazon.value = rutaSvg;
 
-    // Actualizar estilo visual de los botones de alternativa (marcar cuál está activo)
+    // Remover la clase de selección de TODOS los botones de alternativa
     const botonesAlternativos = document.querySelectorAll('.btn-alternativa');
     botonesAlternativos.forEach(btn => btn.classList.remove('activo-recomendado'));
 
+    // Si se pasó el botón por parámetro, iluminarlo
     if (botonClickeado) {
         botonClickeado.classList.add('activo-recomendado');
     } else {
-        // Si se seleccionó desde el select o automático, buscar el botón correspondiente
         botonesAlternativos.forEach(btn => {
             if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(rutaSvg)) {
                 btn.classList.add('activo-recomendado');
@@ -247,7 +247,6 @@ async function procesarImagenSeleccionada(fuenteImagen) {
     imgTemp.src = fuenteImagen;
     
     imgTemp.onload = async () => {
-        // Normalizar dimensiones para que coincidan perfectamente en móviles y PC
         const w = imgTemp.naturalWidth || imgTemp.width || 640;
         const h = imgTemp.naturalHeight || imgTemp.height || 480;
 
@@ -262,7 +261,6 @@ async function procesarImagenSeleccionada(fuenteImagen) {
         imageElement.src = imagenOptimizadaUrl;
         imageElement.style.display = 'block';
 
-        // Sincronizar dimensiones exactas del canvas de dibujo con la imagen mostrada
         canvas.width = w;
         canvas.height = h;
         canvas.style.width = "100%";
@@ -357,7 +355,7 @@ function analizarGeometriaYRecomendar(puntos) {
         ${descripcion}<br><br>
         <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px;">Tus 3 recomendaciones ideales:</div>
         <div class="alternativas-container">
-            <button class="btn-alternativa principal" type="button" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}', this)"><i class="fas fa-star"></i> Ideal</button>
+            <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}', this)"><i class="fas fa-star"></i> Ideal</button>
             <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${alt1}', this)">Opción 2</button>
             <button class="btn-alternativa" type="button" onclick="window.cambiarPlantillaActiva('${alt2}', this)">Opción 3</button>
         </div>
