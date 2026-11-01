@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300">
+        <!-- Aros poligonales -->
+        <polygon points="100,80 260,60 330,130 270,220 120,220 70,150" fill="none" stroke="#111" stroke-width="16" stroke-linejoin="miter"/>
+        <polygon points="470,130 540,60 700,80 730,150 680,220 530,220" fill="none" stroke="#111" stroke-width="16" stroke-linejoin="miter"/>
+        <!-- Puente recto minimalista doble -->
+        <path d="M 315 100 L 485 100" stroke="#111" stroke-width="12"/>
+        <path d="M 325 125 L 475 125" stroke="#111" stroke-width="6"/>
+        <!-- Patillas -->
+        <path d="M 85 110 L 45 110" stroke="#111" stroke-width="16"/>
+        <path d="M 715 110 L 755 110" stroke="#111" stroke-width="16"/>
+    </svg>

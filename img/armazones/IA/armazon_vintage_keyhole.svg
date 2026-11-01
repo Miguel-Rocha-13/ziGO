@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300">
+        <!-- Aros circulares -->
+        <circle cx="220" cy="150" r="110" fill="none" stroke="#5c3a21" stroke-width="24"/>
+        <circle cx="580" cy="150" r="110" fill="none" stroke="#5c3a21" stroke-width="24"/>
+        <!-- Puente Keyhole (ojo de cerradura) -->
+        <path d="M 325 100 C 325 50, 475 50, 475 100" fill="none" stroke="#5c3a21" stroke-width="20"/>
+        <path d="M 325 100 L 310 135" stroke="#5c3a21" stroke-width="20" stroke-linecap="round"/>
+        <path d="M 475 100 L 490 135" stroke="#5c3a21" stroke-width="20" stroke-linecap="round"/>
+        <!-- Soportes laterales -->
+        <path d="M 110 130 L 50 130" stroke="#5c3a21" stroke-width="22"/>
+        <path d="M 690 130 L 750 130" stroke="#5c3a21" stroke-width="22"/>
+    </svg>

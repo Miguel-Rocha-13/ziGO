@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300">
+        <!-- Marco superior grueso -->
+        <path d="M 70 140 Q 90 50 220 50 Q 330 50 350 140" fill="none" stroke="#15527A" stroke-width="35" stroke-linecap="round"/>
+        <path d="M 450 140 Q 470 50 600 50 Q 710 50 730 140" fill="none" stroke="#15527A" stroke-width="35" stroke-linecap="round"/>
+        <!-- Hilo inferior invisible/delgado -->
+        <path d="M 70 140 Q 140 260 350 140" fill="none" stroke="#b8860b" stroke-width="4"/>
+        <path d="M 450 140 Q 520 260 730 140" fill="none" stroke="#b8860b" stroke-width="4"/>
+        <!-- Puente metálico -->
+        <path d="M 350 110 Q 400 90 450 110" fill="none" stroke="#b8860b" stroke-width="12"/>
+        <!-- Bisagras laterales -->
+        <path d="M 65 105 L 35 105" stroke="#15527A" stroke-width="25"/>
+        <path d="M 735 105 L 765 105" stroke="#15527A" stroke-width="25"/>
+    </svg>

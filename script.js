@@ -93,9 +93,8 @@ function irAColocarCita() {
     window.location.href = `agenda.html?armazones=${listaArmazones}`;
 }
 
-
 // ==========================================================
-// --- 6. NUEVO MOTOR DE IA: GOOGLE MEDIAPIPE FACE MESH ---
+// --- 6. MOTOR BIOMÉTRICO LOCAL: GOOGLE MEDIAPIPE FACE MESH ---
 // ==========================================================
 
 let faceMesh = null;
@@ -106,16 +105,10 @@ let lenteActivo = new Image();
 function inicializarProbadorIA() {
     const loaderText = document.getElementById('loader-text');
     const panelBotones = document.getElementById('panel-botones');
-    const btnIniciarCamara = document.getElementById('btn-iniciar-camara');
-    const btnCapturarFoto = document.getElementById('btn-capturar-foto');
-    const imageUpload = document.getElementById('upload-foto');
-    const selectArmazon = document.getElementById('select-armazon');
-    const videoElement = document.getElementById('video-camara');
-
+    
     if (!loaderText || !panelBotones) return;
 
-    // Inicializar MediaPipe Face Mesh (468 puntos)
-    loaderText.innerHTML = "<i class='fas fa-brain fa-spin'></i> Cargando IA de Google MediaPipe...";
+    loaderText.innerHTML = "<i class='fas fa-brain fa-spin'></i> Inicializando red neuronal MediaPipe...";
     
     faceMesh = new FaceMesh({locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
@@ -130,11 +123,20 @@ function inicializarProbadorIA() {
 
     faceMesh.onResults(onResultadosIA);
 
-    // Simular carga para habilitar la interfaz
     setTimeout(() => {
-        loaderText.innerHTML = "<i class='fas fa-check'></i> Motor Biométrico Listo";
+        loaderText.innerHTML = "<i class='fas fa-check'></i> Sistema Listo para Escanear";
         panelBotones.style.display = "flex";
-    }, 1500);
+    }, 1200);
+
+    asignarEventosCamara();
+}
+
+function asignarEventosCamara() {
+    const btnIniciarCamara = document.getElementById('btn-iniciar-camara');
+    const btnCapturarFoto = document.getElementById('btn-capturar-foto');
+    const imageUpload = document.getElementById('upload-foto');
+    const videoElement = document.getElementById('video-camara');
+    const selectArmazon = document.getElementById('select-armazon');
 
     if (btnIniciarCamara) {
         btnIniciarCamara.addEventListener('click', async () => {
@@ -145,7 +147,7 @@ function inicializarProbadorIA() {
                 btnCapturarFoto.style.display = 'flex';
                 
                 document.getElementById('imagen-usuario').style.display = 'none';
-                loaderText.style.display = 'none';
+                document.getElementById('loader-text').style.display = 'none';
                 btnIniciarCamara.style.display = 'none';
                 document.getElementById('label-subir').style.display = 'none';
                 document.getElementById('mensaje-ia').style.display = 'none';
@@ -154,10 +156,9 @@ function inicializarProbadorIA() {
                 document.getElementById('btn-otra-foto').style.display = 'inline-flex';
                 
                 const canvas = document.getElementById('canvas-ia');
-                const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
             } catch (error) {
-                alert("No se pudo acceder a la cámara. Revisa los permisos de tu navegador.");
+                alert("No se pudo acceder a la cámara.");
             }
         });
     }
@@ -168,9 +169,8 @@ function inicializarProbadorIA() {
             ctxTemp.width = videoElement.videoWidth || 640;
             ctxTemp.height = videoElement.videoHeight || 480;
             ctxTemp.getContext('2d').drawImage(videoElement, 0, 0, ctxTemp.width, ctxTemp.height);
-            
             detenerCamaraProbador();
-            iniciarAnalisis(ctxTemp.toDataURL('image/png'));
+            procesarImagenSeleccionada(ctxTemp.toDataURL('image/png'));
         });
     }
 
@@ -179,8 +179,8 @@ function inicializarProbadorIA() {
             const file = e.target.files[0];
             if (!file) return;
             detenerCamaraProbador();
-            loaderText.style.display = 'none';
-            iniciarAnalisis(URL.createObjectURL(file));
+            document.getElementById('loader-text').style.display = 'none';
+            procesarImagenSeleccionada(URL.createObjectURL(file));
         });
     }
 
@@ -210,16 +210,16 @@ window.cambiarPlantillaActiva = function(rutaSvg) {
     };
 };
 
-async function iniciarAnalisis(fuenteImagen) {
+async function procesarImagenSeleccionada(fuenteImagen) {
     const mensajeIA = document.getElementById('mensaje-ia');
     const imageElement = document.getElementById('imagen-usuario');
     const canvas = document.getElementById('canvas-ia');
 
     mensajeIA.style.display = "block";
-    mensajeIA.style.backgroundColor = "#d4edda";
-    mensajeIA.style.color = "#155724";
-    mensajeIA.style.borderLeft = "4px solid #28a745";
-    mensajeIA.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Escaneando 468 puntos faciales...";
+    mensajeIA.style.backgroundColor = "#e2f0fb";
+    mensajeIA.style.color = "#01707F";
+    mensajeIA.style.borderLeft = "4px solid #15527A";
+    mensajeIA.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Escaneando 468 puntos biométricos del rostro...";
 
     imageElement.src = fuenteImagen;
     imageElement.style.display = 'block';
@@ -227,12 +227,18 @@ async function iniciarAnalisis(fuenteImagen) {
     imageElement.onload = async () => {
         canvas.width = imageElement.naturalWidth || 400;
         canvas.height = imageElement.naturalHeight || 400;
-        // Enviar imagen a Google MediaPipe
-        await faceMesh.send({image: imageElement});
+        
+        try {
+            // Enviar imagen a MediaPipe para análisis geométrico inmediato
+            await faceMesh.send({image: imageElement});
+        } catch (error) {
+            console.error(error);
+            mostrarErrorProbador("Error al procesar la imagen. Intenta con otra fotografía.");
+        }
     };
 }
 
-// Callback cuando MediaPipe termina el análisis
+// Callback de MediaPipe con los 468 puntos tridimensionales
 function onResultadosIA(results) {
     if (!results.multiFaceLandmarks || results.multiFaceLandmarks.length === 0) {
         mostrarErrorProbador("No se detectó un rostro claro. Intenta con mejor iluminación o de frente.");
@@ -243,17 +249,14 @@ function onResultadosIA(results) {
     const ancho = canvas.width;
     const alto = canvas.height;
     
-    // Guardar los 468 puntos normalizados a los píxeles reales del canvas
     ultimosPuntosFaciales = results.multiFaceLandmarks[0].map(pt => ({
-        x: pt.x * ancho,
-        y: pt.y * alto
+        x: pt.x * ancho, y: pt.y * alto
     }));
 
-    analizarGeometria(ultimosPuntosFaciales);
+    analizarGeometriaYRecomendar(ultimosPuntosFaciales);
 }
 
-function analizarGeometria(puntos) {
-    // Puntos anatómicos precisos de MediaPipe Face Mesh
+function analizarGeometriaYRecomendar(puntos) {
     const frenteSuperior = puntos[10];
     const menton = puntos[152];
     const pomuloIzquierdo = puntos[234];
@@ -261,7 +264,6 @@ function analizarGeometria(puntos) {
     const mandibulaIzquierda = puntos[58];
     const mandibulaDerecha = puntos[288];
 
-    // Distancias reales en píxeles
     const alturaRostro = Math.hypot(menton.x - frenteSuperior.x, menton.y - frenteSuperior.y);
     const anchoRostro = Math.hypot(pomuloDerecho.x - pomuloIzquierdo.x, pomuloDerecho.y - pomuloIzquierdo.y);
     const anchoMandibula = Math.hypot(mandibulaDerecha.x - mandibulaIzquierda.x, mandibulaDerecha.y - mandibulaIzquierda.y);
@@ -269,66 +271,54 @@ function analizarGeometria(puntos) {
     const ratioAlturaAncho = alturaRostro / anchoRostro;
     const ratioMandibulaRostro = anchoMandibula / anchoRostro;
 
+    let tipoRostro = "";
+    let descripcion = "";
     let armazonPrincipal = "";
     let alt1 = "";
     let alt2 = "";
-    let recomendacionTexto = "";
 
     if (ratioAlturaAncho > 1.35) {
+        tipoRostro = "Alargado / Ovalado";
+        descripcion = "Tus proporciones verticales destacan. El estilo Wayfarer equilibra y acorta visualmente tus facciones con simetría.";
         armazonPrincipal = "img/armazones/IA/armazon_wayfarer.svg";
         alt1 = "img/armazones/IA/armazon_rectangular.svg";
         alt2 = "img/armazones/IA/armazon_aviador.svg";
-        recomendacionTexto = `
-            <strong><i class="fas fa-check-circle"></i> Análisis Biométrico: Rostro Alargado / Ovalado.</strong><br>
-            El escaneo confirma proporciones verticales dominantes. El estilo <strong>Wayfarer</strong> es ideal porque aporta anchura visual y equilibrio simétrico perfecto.<br><br>
-            <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px;">Otras 2 alternativas recomendadas para ti:</div>
-            <div class="alternativas-container">
-                <button class="btn-alternativa principal" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}')"><i class="fas fa-star"></i> Wayfarer (Ideal)</button>
-                <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt1}')">Rectangular</button>
-                <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt2}')">Aviador</button>
-            </div>`;
     } else if (ratioMandibulaRostro > 0.78) {
+        tipoRostro = "Cuadrado / Angular";
+        descripcion = "Tu estructura ósea presenta una mandíbula fuerte. Los armazones redondos suavizan y contrastan tus ángulos con elegancia.";
         armazonPrincipal = "img/armazones/IA/armazon_redondo.svg";
         alt1 = "img/armazones/IA/armazon_ovalado.svg";
         alt2 = "img/armazones/IA/armazon_semi_aire.svg";
-        recomendacionTexto = `
-            <strong><i class="fas fa-check-circle"></i> Análisis Biométrico: Rostro Cuadrado / Angular.</strong><br>
-            El escaneo detecta una mandíbula estructurada. Te recomendamos armazones <strong>Redondos</strong> (ideales) u ovalados para suavizar y contrastar tus ángulos naturales.<br><br>
-            <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px;">Otras 2 alternativas recomendadas para ti:</div>
-            <div class="alternativas-container">
-                <button class="btn-alternativa principal" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}')"><i class="fas fa-star"></i> Redondo (Ideal)</button>
-                <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt1}')">Ovalado</button>
-                <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt2}')">Semi al Aire</button>
-            </div>`;
     } else if (ratioAlturaAncho < 1.22) {
+        tipoRostro = "Redondo";
+        descripcion = "Tus facciones destacan por líneas curvas suaves. Los armazones hexagonales aportan definición geométrica y estilizan los pómulos.";
         armazonPrincipal = "img/armazones/IA/armazon_hexagonal.svg";
         alt1 = "img/armazones/IA/armazon_rectangular.svg";
         alt2 = "img/armazones/IA/armazon_octagonal.svg";
-        recomendacionTexto = `
-            <strong><i class="fas fa-check-circle"></i> Análisis Biométrico: Rostro Redondo.</strong><br>
-            El escaneo identifica curvas suaves y pómulos anchos. Los armazones <strong>Hexagonales</strong> (ideales) o rectangulares añadirán definición y perfilarán tu rostro.<br><br>
-            <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px;">Otras 2 alternativas recomendadas para ti:</div>
-            <div class="alternativas-container">
-                <button class="btn-alternativa principal" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}')"><i class="fas fa-star"></i> Hexagonal (Ideal)</button>
-                <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt1}')">Rectangular</button>
-                <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt2}')">Octagonal</button>
-            </div>`;
     } else {
+        tipoRostro = "Diamante / Corazón";
+        descripcion = "Tienes pómulos prominentes y mentón fino. El estilo Cat-Eye resalta la parte superior y equilibra tu estructura facial a la perfección.";
         armazonPrincipal = "img/armazones/IA/armazon_cateye.svg";
         alt1 = "img/armazones/IA/armazon_clubmaster.svg";
-        alt2 = "img/armazones/IA/armazon_hexagonal.svg";
-        recomendacionTexto = `
-            <strong><i class="fas fa-check-circle"></i> Análisis Biométrico: Rostro Diamante / Corazón.</strong><br>
-            Tus pómulos destacan sobre un mentón afilado. El estilo <strong>Cat-Eye</strong> (ideal) armoniza con la línea de tus cejas y resalta la parte superior de tu estructura facial.<br><br>
-            <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px;">Otras 2 alternativas recomendadas para ti:</div>
-            <div class="alternativas-container">
-                <button class="btn-alternativa principal" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}')"><i class="fas fa-star"></i> Cat-Eye (Ideal)</button>
-                <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt1}')">Clubmaster</button>
-                <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt2}')">Hexagonal</button>
-            </div>`;
+        alt2 = "img/armazones/IA/armazon_futurista.svg";
     }
 
-    document.getElementById('mensaje-ia').innerHTML = recomendacionTexto;
+    const mensajeIA = document.getElementById('mensaje-ia');
+    mensajeIA.style.display = "block";
+    mensajeIA.style.backgroundColor = "#d4edda";
+    mensajeIA.style.color = "#155724";
+    mensajeIA.style.borderLeft = "4px solid #28a745";
+    mensajeIA.innerHTML = `
+        <strong><i class="fas fa-check-circle"></i> Análisis Biométrico ziGO: Rostro ${tipoRostro}.</strong><br>
+        ${descripcion}<br><br>
+        <div style="font-size: 11px; font-weight: bold; margin-bottom: 4px;">Tus 3 recomendaciones ideales:</div>
+        <div class="alternativas-container">
+            <button class="btn-alternativa principal" onclick="window.cambiarPlantillaActiva('${armazonPrincipal}')"><i class="fas fa-star"></i> Ideal</button>
+            <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt1}')">Opción 2</button>
+            <button class="btn-alternativa" onclick="window.cambiarPlantillaActiva('${alt2}')">Opción 3</button>
+        </div>
+    `;
+
     document.getElementById('selector-container').style.display = 'flex';
     document.getElementById('btn-ir-catalogo').style.display = 'inline-flex';
     document.getElementById('btn-otra-foto').style.display = "inline-flex";
@@ -340,29 +330,24 @@ function dibujarLentesMediaPipe(puntos) {
     const canvas = document.getElementById('canvas-ia');
     const ctx = canvas.getContext('2d');
     
-    // Puntos de anclaje de Google MediaPipe
     const ojoIzquierdoInterno = puntos[133]; 
     const ojoDerechoInterno = puntos[362];
-    const tabiqueNasal = puntos[168]; // Punto exacto entre los ojos
+    const tabiqueNasal = puntos[168]; 
     
-    // Ángulo de inclinación de la cabeza
     const deltaY = ojoDerechoInterno.y - ojoIzquierdoInterno.y;
     const deltaX = ojoDerechoInterno.x - ojoIzquierdoInterno.x;
     const angulo = Math.atan2(deltaY, deltaX);
 
-    // Anchura exacta basada en los extremos de la sien
     const sienIzquierda = puntos[234];
     const sienDerecha = puntos[454];
     const anchoRostro = Math.hypot(sienDerecha.x - sienIzquierda.x, sienDerecha.y - sienIzquierda.y);
     
-    // Ajuste de escala para que los lentes no se salgan del rostro
     const anchoLentes = anchoRostro * 1.05; 
     const aspectR = lenteActivo.naturalHeight / lenteActivo.naturalWidth;
     const altoLentes = anchoLentes * (isNaN(aspectR) ? 0.45 : aspectR); 
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save(); 
-    // Anclar exactamente en el tabique
     ctx.translate(tabiqueNasal.x, tabiqueNasal.y); 
     ctx.rotate(angulo); 
     ctx.drawImage(lenteActivo, -anchoLentes / 2, -altoLentes / 2, anchoLentes, altoLentes);
@@ -390,10 +375,7 @@ function reiniciarProbador() {
     const canvas = document.getElementById('canvas-ia');
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
     
-    const loaderText = document.getElementById('loader-text');
-    loaderText.style.display = 'block';
-    loaderText.innerHTML = "<i class='fas fa-user'></i> Esperando rostro...";
-    
+    document.getElementById('loader-text').style.display = 'block';
     document.getElementById('mensaje-ia').style.display = "none";
     document.getElementById('selector-container').style.display = "none";
     document.getElementById('btn-ir-catalogo').style.display = "none";
