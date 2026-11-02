@@ -368,27 +368,19 @@ function analizarGeometriaYRecomendar(puntos) {
 
 function dibujarLentesMediaPipe(puntos) {
     const canvas = document.getElementById('canvas-ia');
-    const imageElement = document.getElementById('imagen-usuario');
     const ctx = canvas.getContext('2d');
     
-    // Sincronizar el tamaño interno del canvas con las dimensiones visuales reales en pantalla
-    const displayWidth = imageElement.clientWidth || imageElement.width || 400;
-    const displayHeight = imageElement.clientHeight || imageElement.height || 400;
-    
-    if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
-        canvas.width = displayWidth;
-        canvas.height = displayHeight;
+    const ancho = canvas.width;
+    const alto = canvas.height;
+
+    if (!ancho || !alto || ancho === 0 || alto === 0) {
+        setTimeout(() => dibujarLentesMediaPipe(puntos), 50);
+        return;
     }
-
-    const naturalW = imageElement.naturalWidth || displayWidth;
-    const naturalH = imageElement.naturalHeight || displayHeight;
-
-    const escalaX = displayWidth / naturalW;
-    const escalaY = displayHeight / naturalH;
-
-    const ojoIzquierdoInterno = { x: puntos[133].x * escalaX, y: puntos[133].y * escalaY }; 
-    const ojoDerechoInterno = { x: puntos[362].x * escalaX, y: puntos[362].y * escalaY };
-    const tabiqueNasal = { x: puntos[168].x * escalaX, y: puntos[168].y * escalaY }; 
+    
+    const ojoIzquierdoInterno = puntos[133]; 
+    const ojoDerechoInterno = puntos[362];
+    const tabiqueNasal = puntos[168]; 
     
     const deltaY = ojoDerechoInterno.y - ojoIzquierdoInterno.y;
     const deltaX = ojoDerechoInterno.x - ojoIzquierdoInterno.x;
@@ -396,13 +388,13 @@ function dibujarLentesMediaPipe(puntos) {
 
     const sienIzquierda = puntos[234];
     const sienDerecha = puntos[454];
-    const anchoRostro = Math.hypot(sienDerecha.x - sienIzquierda.x, sienDerecha.y - sienIzquierda.y) * escalaX;
+    const anchoRostro = Math.hypot(sienDerecha.x - sienIzquierda.x, sienDerecha.y - sienIzquierda.y);
     
     const anchoLentes = anchoRostro * 1.05; 
     const aspectR = lenteActivo.naturalHeight / lenteActivo.naturalWidth;
     const altoLentes = anchoLentes * (isNaN(aspectR) ? 0.45 : aspectR); 
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, ancho, alto);
     ctx.save(); 
     ctx.translate(tabiqueNasal.x, tabiqueNasal.y); 
     ctx.rotate(angulo); 
