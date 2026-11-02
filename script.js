@@ -108,7 +108,7 @@ function inicializarProbadorIA() {
     
     if (!loaderText || !panelBotones) return;
 
-    loaderText.innerHTML = "<i class='fas fa-brain fa-spin'></i> Inicializando red neuronal MediaPipe...";
+    loaderText.innerHTML = "<i class='fas fa-brain fa-spin'></i> Inicializando IA de ZiGO...";
     
     faceMesh = new FaceMesh({locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
